@@ -124,8 +124,8 @@ daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
 - Experiment with the `bins` parameter.
 - Add a **title** and **axis** labels.
    - Hint: Use `plt.hist()` for numeric distributions.
-- Run the script using the command: `python ./lab7d.py` and verify the output. 
-**Questions for Reflection:**
+- Run the script using the command: `python ./lab7d.py` and verify the output.
+- **Questions for Reflection:**
    - Why is a bar chart appropriate for the product sales data?
    - Why is a histogram appropriate for daily sales?
    - How does changing the number of bins in the histogram affect the visualization?
@@ -172,7 +172,8 @@ plt.title("Plot 1")
 - The first 2 = number of rows, the second 2 = number of columns, the third 1 = index of this subplot (top-left).
 - Extend this idea to plot `y2`, `y3`, and `y4` in the remaining subplots.
 - Adjust spacing so that titles and labels do not overlap (hint: `plt.tight_layout()`).
-**Questions for Reflection:**
+- Run the script using the command: `python ./lab7e.py` and verify the output.
+- **Questions for Reflection:**
    - How does using subplots help compare multiple datasets?
    - Why is a histogram appropriate for daily sales?
    - Could you combine different types of plots (line, scatter, bar) in the same figure? How?
