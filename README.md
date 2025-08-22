@@ -162,7 +162,8 @@ For example: A **2×2 subplot layout** means:
    - Top-right: Line plot of y2 vs x
    - Bottom-left: Line plot of y3 vs x
    - Bottom-right: Line plot of y4 vs x
-**Guiding Example:**
+
+**Example to start with:**
 ```Python
 plt.subplot(2, 2, 1)  # Selects the top-left plot in a 2x2 grid
 plt.plot(x, y1)
