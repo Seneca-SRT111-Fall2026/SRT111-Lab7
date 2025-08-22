@@ -106,9 +106,8 @@ Each point represents an observation, making it easier to identify trends, clust
 These plots help visualize categorical and frequency-based data effectively.
 
 **Instructions:**
-- Create a new python file called labdc.py.
-- Import Matplotlib.
-- Create a list of categories and corresponding values. Example:
+- Create a new python file called lab7d.py.
+- Import Matplotlib and create a list of categories and corresponding values. Example:
 ```Python
   import matplotlib.pyplot as plt
    products = ['Coffee', 'Tea', 'Juice', 'Soda']
@@ -116,7 +115,7 @@ These plots help visualize categorical and frequency-based data effectively.
 ```
 - Plot a bar chart showing sales per product.
 - Add a **title**, **x-axis label**, and **y-axis label**.
-   - Hint: Use plt.bar() for categorical comparisons.
+   - Hint: Use `plt.bar()` for categorical comparisons.
 - Next, create a list of numerical data representing daily sales for all products combined:
 ```Python
 daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
@@ -124,9 +123,9 @@ daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
 - Plot a histogram to visualize the distribution of daily sales.
 - Experiment with the `bins` parameter.
 - Add a **title** and **axis** labels.
-   - Hint: Use plt.hist() for numeric distributions.
+   - Hint: Use `plt.hist()` for numeric distributions.
 - Run the script using the command: `python ./lab7d.py` and verify the output.
-- **Questions for Reflection:**
+**Questions for Reflection:**
    - Why is a bar chart appropriate for the product sales data?
    - Why is a histogram appropriate for daily sales?
    - How does changing the number of bins in the histogram affect the visualization?
@@ -134,6 +133,49 @@ daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
 
 ## INVESTIGATION 2: ADVANCED VISUALIZATION AND REAL WORLD DATA 
 
+### lab7e.py - Subplots
+**Objective:** Learn to create multiple plots in a single figure using `plt.subplot()` and customize each subplot.
+
+Sometimes, you want to **display multiple plots in a single figure** for easy comparison.  
+Matplotlib’s **subplots** allow you to arrange multiple plots in rows and columns within the same figure.
+For example: A **2×2 subplot layout** means:
+- 2 rows and 2 columns → 4 plots in total  
+- Each plot has an **index** to specify its position:  
+  - 1 → Top-left  
+  - 2 → Top-right  
+  - 3 → Bottom-left  
+  - 4 → Bottom-right  
+
+**Instructions:**
+- Create a new python file called lab7e.py.
+- Import Matplotlib and prepare the data. Example:
+```Python
+  import matplotlib.pyplot as plt
+   x = [1, 2, 3, 4, 5]
+   y1 = [2, 4, 6, 8, 10]
+   y2 = [1, 3, 5, 7, 9]
+   y3 = [5, 3, 6, 2, 7]
+   y4 = [10, 8, 6, 4, 2]
+```
+- Create a 2×2 subplot layout:
+   - Top-left: Line plot of y1 vs x
+   - Top-right: Line plot of y2 vs x
+   - Bottom-left: Line plot of y3 vs x
+   - Bottom-right: Line plot of y4 vs x
+**Guiding Example:**
+```Python
+plt.subplot(2, 2, 1)  # Selects the top-left plot in a 2x2 grid
+plt.plot(x, y1)
+plt.title("Plot 1")
+```
+- The first 2 = number of rows, the second 2 = number of columns, the third 1 = index of this subplot (top-left).
+- Extend this idea to plot y2, y3, and y4 in the remaining subplots.
+- Adjust spacing so that titles and labels do not overlap (hint: plt.tight_layout()).
+**Questions for Reflection:**
+   - How does using subplots help compare multiple datasets?
+   - Why is a histogram appropriate for daily sales?
+   - Could you combine different types of plots (line, scatter, bar) in the same figure? How?
+     
 ## Lab 6 Sign-Off
 - Submit a PDF on Blackboard, named using your Seneca username (e.g., **yoursenecausername.pdf**).
 - The PDF must include screenshots of the following scripts and their terminal output, clearly showing your GitHub username.
