@@ -38,11 +38,12 @@ A line plot is one of the simplest and most commonly used visualizations. It is 
    x = [1, 2, 3, 4, 5]
    y = [2, 4, 6, 8, 10]
 ```
-- Plot `y` versus `x` using plt.plot().
+- Plot `y` versus `x` using `plt.plot()`.
 - Add a title, x-axis label, and y-axis label.
    - Use `plt.xlabel('Your X label')` and `plt.ylabel('Your Y label')` for axes labels.
    - Use `plt.title('Your Title')` to add a title.
 - Display the plot using `plt.show()`.
+- Run the scrip using the command: `python ./lab7a.py` and verify the output.
 ## Lab 6 Sign-Off
 - Submit a PDF on Blackboard, named using your Seneca username (e.g., **yoursenecausername.pdf**).
 - The PDF must include screenshots of the following scripts and their terminal output, clearly showing your GitHub username.
