@@ -98,6 +98,40 @@ Each point represents an observation, making it easier to identify trends, clust
 - Display the plot using plt.show().
 - Run the script using the command: `python ./lab7c.py` and verify the output.
 ---
+### lab7d.py - Bar Charts and Histograms
+**Objective:** Learn how to create bar charts and histograms, and understand their differences and uses.
+
+- A **bar chart** is used to compare quantities across different categories.  
+- A **histogram** shows the distribution of numerical data by grouping it into bins.  
+These plots help visualize categorical and frequency-based data effectively.
+
+**Instructions:**
+- Create a new python file called labdc.py.
+- Import Matplotlib.
+- Create a list of categories and corresponding values. Example:
+```Python
+  import matplotlib.pyplot as plt
+   products = ['Coffee', 'Tea', 'Juice', 'Soda']
+   sales = [150, 120, 90, 60]
+```
+- Plot a bar chart showing sales per product.
+- Add a **title**, **x-axis label**, and **y-axis label**.
+   - Hint: Use plt.bar() for categorical comparisons.
+- Next, create a list of numerical data representing daily sales for all products combined:
+```Python
+daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
+```
+- Plot a histogram to visualize the distribution of daily sales.
+- Experiment with the `bins` parameter.
+- Add a **title** and **axis** labels.
+   - Hint: Use plt.hist() for numeric distributions.
+- Run the script using the command: `python ./lab7d.py` and verify the output.
+- **Questions for Reflection:**
+   - Why is a bar chart appropriate for the product sales data?
+   - Why is a histogram appropriate for daily sales?
+   - How does changing the number of bins in the histogram affect the visualization?
+   - What could you add to improve readability or interpretability of these plots?
+
 ## INVESTIGATION 2: ADVANCED VISUALIZATION AND REAL WORLD DATA 
 
 ## Lab 6 Sign-Off
