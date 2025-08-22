@@ -210,18 +210,47 @@ df = pd.read_csv(url)
 - Adjust spacing with `plt.tight_layout()`.
 - Run your script with python ./lab7f.py and verify the output.
 ---
-## Lab 6 Sign-Off
+### lab7g.py - Annotating and Saving Plots
+**Objective:** Learn to annotate plots, highlight key points, and save figures using Matplotlib.
+
+In this task, you will **highlight important insights** in your plots using annotations and markers.  
+You will also learn how to **save your visualizations** to image files, which is useful for reports and presentations.
+
+**Instructions:**
+- Create a new python file called lab7f.py.
+- Import Matplotlib and Pandas (you can reuse the movie dataset from lab7f.py):
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+url = "https://github.com/itiievskyi/IMDB-Top-250/blob/master/imdb_top_250.csv"
+df = pd.read_csv(url)
+```
+- Using the dataset, create a line plot of movie ratings over the years.
+- **Highlight key points:**
+   - Mark the movie(s) with the highest rating using a different color or marker.
+   - Annotate these points with the movie title using plt.annotate().
+- **Further enhancements:**
+   - Highlight the earliest and latest movie in the dataset.
+   - Change colors, line styles, or marker types for better visualization.
+   - Hint
+      - plt.scatter() can be used to mark specific points on a line plot.
+      - plt.annotate("Text", xy=(x, y), xytext=(x_offset, y_offset), arrowprops=dict(...)) allows text with an arrow.
+- Save the figure to a file:
+```Python
+plt.savefig("movie_ratings_plot.png")
+```
+- Run your script using python ./lab7g.py and verify the output.
+  
+## Lab 7 Sign-Off
 - Submit a PDF on Blackboard, named using your Seneca username (e.g., **yoursenecausername.pdf**).
 - The PDF must include screenshots of the following scripts and their terminal output, clearly showing your GitHub username.
-    - lab6a.py
-    - lab6b.py
-    - lab6c.py
-    - lab6d.py
-    - lab6e.py
-    - lab6f.py
-    - lab6g.py
-    - lab6h.py
-    - lab6i.py
-    - lab6j.py
+    - lab7a.py
+    - lab7b.py
+    - lab7c.py
+    - lab7d.py
+    - lab7e.py
+    - lab7f.py
+    - lab7g.py
 - Ensure the code and output are clearly readable. Screenshots should be high-resolution (minimum 800x600) and not blurry.
--  Blurry or unreadable submissions will be returned for redo. Resubmissions will only be graded as Satisfactory with a grade of 0, provided the work is satisfactory.
+- Blurry or unreadable submissions will be returned for redo. Resubmissions will only be graded as Satisfactory with a grade of 0, provided the work is satisfactory.
