@@ -74,6 +74,30 @@ plt.plot(x, y2, color='red', linestyle='--', label='y = x^2')
 - Display the plot using `plt.show()`.
 - Run the script using the command: `python ./lab7b.py` and verify the output.
 ---
+### lab7c.py - Scatter Plots
+**Objective:** Learn how to create a scatter plot and customize point appearance, including color, size, and transparency.
+
+A **scatter plot** is used to visualize the relationship between two variables.  
+Each point represents an observation, making it easier to identify trends, clusters, or outliers.
+
+**Instructions:**
+- Create a new python file called lab7c.py.
+- Import Matplotlib and create two lists representing data points:
+```Python
+  import matplotlib.pyplot as plt
+   x = [5, 7, 8, 7, 6, 9, 5, 6]
+   y = [99, 86, 87, 88, 100, 86, 103, 87]
+```
+- Create a scatter plot using plt.scatter().
+- Customize the points:
+   - Change color (e.g., c='green')
+   - Change size (e.g., s=100)
+   - Adjust transparency (e.g., alpha=0.6)
+   - **Hint:** Use plt.scatter(x, y, c='color', s=size, alpha=transparency) to customize points. 
+- Add a **title**, **x-axis label**, and **y-axis label**.
+- Display the plot using plt.show().
+- Run the script using the command: `python ./lab7c.py` and verify the output.
+---
 ## INVESTIGATION 2: ADVANCED VISUALIZATION AND REAL WORLD DATA 
 
 ## Lab 6 Sign-Off
