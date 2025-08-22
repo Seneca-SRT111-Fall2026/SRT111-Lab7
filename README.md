@@ -217,7 +217,7 @@ In this task, you will **highlight important insights** in your plots using anno
 You will also learn how to **save your visualizations** to image files, which is useful for reports and presentations.
 
 **Instructions:**
-- Create a new python file called lab7f.py.
+- Create a new python file called lab7g.py.
 - Import Matplotlib and Pandas (you can reuse the movie dataset from lab7f.py):
 ```python
 import pandas as pd
