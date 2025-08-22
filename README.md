@@ -34,9 +34,9 @@ A line plot is one of the simplest and most commonly used visualizations. It is 
 - Create a new python file called lab7a.py.
 - Import Matplotlib and create two lists:
 ```Python
-  import matplotlib.pyplot as plt
-   x = [1, 2, 3, 4, 5]
-   y = [2, 4, 6, 8, 10]
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
 ```
 - Plot `y` versus `x` using `plt.plot()`.
 - Add a **title**, **x-axis label**, and **y-axis label**.
@@ -58,10 +58,10 @@ Plotting multiple lines together allows us to see relationships or differences b
    - a list of `x` values as shown below.
    - two lists of `y` values as shown below.
 ```Python
-  import matplotlib.pyplot as plt
-   x = [1, 2, 3, 4, 5]
-   y1 = [2, 4, 6, 8, 10]   # first line
-   y2 = [1, 4, 9, 16, 25]  # second line
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4, 5]
+y1 = [2, 4, 6, 8, 10]   # first line
+y2 = [1, 4, 9, 16, 25]  # second line
 ```
 - Plot both lines on the same figure:
 ```Python
@@ -84,9 +84,9 @@ Each point represents an observation, making it easier to identify trends, clust
 - Create a new python file called lab7c.py.
 - Import Matplotlib and create two lists representing data points:
 ```Python
-  import matplotlib.pyplot as plt
-   x = [5, 7, 8, 7, 6, 9, 5, 6]
-   y = [99, 86, 87, 88, 100, 86, 103, 87]
+import matplotlib.pyplot as plt
+x = [5, 7, 8, 7, 6, 9, 5, 6]
+y = [99, 86, 87, 88, 100, 86, 103, 87]
 ```
 - Create a scatter plot using plt.scatter().
 - Customize the points:
@@ -109,9 +109,9 @@ These plots help visualize categorical and frequency-based data effectively.
 - Create a new python file called lab7d.py.
 - Import Matplotlib and create a list of categories and corresponding values. Example:
 ```Python
-  import matplotlib.pyplot as plt
-   products = ['Coffee', 'Tea', 'Juice', 'Soda']
-   sales = [150, 120, 90, 60]
+import matplotlib.pyplot as plt
+products = ['Coffee', 'Tea', 'Juice', 'Soda']
+sales = [150, 120, 90, 60]
 ```
 - Plot a bar chart showing sales per product.
 - Add a **title**, **x-axis label**, and **y-axis label**.
@@ -150,12 +150,12 @@ For example: A **2×2 subplot layout** means:
 - Create a new python file called lab7e.py.
 - Import Matplotlib and prepare the data. Example:
 ```Python
-  import matplotlib.pyplot as plt
-   x = [1, 2, 3, 4, 5]
-   y1 = [2, 4, 6, 8, 10]
-   y2 = [1, 3, 5, 7, 9]
-   y3 = [5, 3, 6, 2, 7]
-   y4 = [10, 8, 6, 4, 2]
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4, 5]
+y1 = [2, 4, 6, 8, 10]
+y2 = [1, 3, 5, 7, 9]
+y3 = [5, 3, 6, 2, 7]
+y4 = [10, 8, 6, 4, 2]
 ```
 - Create a 2×2 subplot layout:
    - Top-left: Line plot of y1 vs x
