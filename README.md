@@ -24,7 +24,7 @@ For each task:
 5. After completing all tasks, **convert the Word document to PDF**.  Name the PDF file using your **yoursenecausername.pdf**
 6. **Submit the PDF file** as your final lab submission on Blackbaord.
 
-## INVESTIGATION 1: CREATING AND USING ARRAYS IN NumPy
+## INVESTIGATION 1: BASIC PLOTS AND CUSTOMIZATION
 
 ### lab7a.py - Your First Line Plot
 **Objective:** Learn how to create a simple line plot and label its axes and title.
@@ -39,11 +39,43 @@ A line plot is one of the simplest and most commonly used visualizations. It is 
    y = [2, 4, 6, 8, 10]
 ```
 - Plot `y` versus `x` using `plt.plot()`.
-- Add a title, x-axis label, and y-axis label.
+- Add a **title**, **x-axis label**, and **y-axis label**.
    - Use `plt.xlabel('Your X label')` and `plt.ylabel('Your Y label')` for axes labels.
    - Use `plt.title('Your Title')` to add a title.
 - Display the plot using `plt.show()`.
-- Run the scrip using the command: `python ./lab7a.py` and verify the output.
+- Run the script using the command: `python ./lab7a.py` and verify the output.
+---
+
+### lab7b.py - Plotting Multiple Lines
+**Objective:** Learn how to plot multiple lines on the same figure and customize their appearance with colors, line styles, and legends.
+
+Often, we want to compare two or more datasets on the same graph.  
+Plotting multiple lines together allows us to see relationships or differences between the datasets clearly.
+
+**Instructions:**
+- Create a new python file called lab7b.py.
+- Import Matplotlib and create two lists:
+   - a list of `x` values as shown below.
+   - two lists of `y` values as shown below.
+```Python
+  import matplotlib.pyplot as plt
+   x = [1, 2, 3, 4, 5]
+   y1 = [2, 4, 6, 8, 10]   # first line
+   y2 = [1, 4, 9, 16, 25]  # second line
+```
+- Plot both lines on the same figure:
+```Python
+plt.plot(x, y1, color='blue', linestyle='-', label='y = 2x')
+plt.plot(x, y2, color='red', linestyle='--', label='y = x^2')
+```
+- Add a **title**, **x-axis label**, and **y-axis label**.
+- Add a **legend** to distinguish the lines.
+- Add **grid lines** for better readability. Use `plt.grid(True)` to show grid lines.
+- Display the plot using `plt.show()`.
+- Run the script using the command: `python ./lab7b.py` and verify the output.
+---
+## INVESTIGATION 2: ADVANCED VISUALIZATION AND REAL WORLD DATA 
+
 ## Lab 6 Sign-Off
 - Submit a PDF on Blackboard, named using your Seneca username (e.g., **yoursenecausername.pdf**).
 - The PDF must include screenshots of the following scripts and their terminal output, clearly showing your GitHub username.
