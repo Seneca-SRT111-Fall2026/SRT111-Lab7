@@ -8,6 +8,10 @@ By completing these tasks, you will gain hands-on experience in turning raw data
 ----
 
 # Lab Objectives
+- Understand the role of Pandas in data analysis.
+- Create and manipulate Pandas Series and DataFrames.
+- Perform filtering, grouping, and aggregations in Pandas.
+- Apply both libraries to solve data-driven problems.
 - Understand the basics of Matplotlib and its plotting functions.
 - Generate and customize various plot types such as line, scatter, bar, and histogram.
 - Apply visual elements (titles, labels, legends, grid, styles) to improve readability.
