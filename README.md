@@ -4,6 +4,9 @@ Data visualization is a key skill for understanding and communicating insights f
 **Matplotlib** is one of the most powerful and widely used Python libraries for creating a wide range of static, animated, and interactive visualizations.
 In this lab, you will explore how to turn raw data into meaningful plots, understand the basics of different plot types, and learn how to enhance visualizations for clarity and impact.
 By completing these tasks, you will gain hands-on experience in turning raw data into clear and meaningful visualizations that make your findings easier to interpret and communicate.
+
+----
+
 # Lab Objectives
 - Understand the basics of Matplotlib and its plotting functions.
 - Generate and customize various plot types such as line, scatter, bar, and histogram.
@@ -12,6 +15,9 @@ By completing these tasks, you will gain hands-on experience in turning raw data
 - Annotate and highlight key data points in a plot.
 - Visualize real-world style data and CSV-based datasets.
 - Apply Matplotlib skills to interpret and communicate data effectively.
+
+----
+
 # Submission Instructions
 For each task:
 1. **Write the script** in Codespaces.  
@@ -24,6 +30,161 @@ For each task:
 5. After completing all tasks, **convert the Word document to PDF**.  Name the PDF file using your **yoursenecausername.pdf**
 6. **Submit the PDF file** as your final lab submission on Blackbaord.
 
+----
+
+## INVESTIGATION 2: CREATING AND USING SERIES AND DATA FRAMES FROM Pandas
+Pandas is a Python library used for data manipulation and analysis. It provides two main data structures:
+- Series – a one-dimensional labeled array, similar to a column in a spreadsheet or a 1D NumPy array with labels.
+- DataFrame – a two-dimensional labeled data structure, like a table with rows and columns.
+Why use Pandas:
+- Easily handle tabular data.
+- Perform filtering, grouping, and aggregation.
+- Combine multiple datasets efficiently.
+
+### lab6g.py - Creating and Exploring Pandas Series
+**Objective:** Learn how to create Pandas Series with values, index labels, and a name, and access elements by position or label.
+
+A Pandas Series is like a single column of data with labels (index) for each element. It can also have a name, similar to a column title in a spreadsheet. Series can be created from lists, NumPy arrays, or dictionaries.
+Look at the example given below:
+```Python
+import pandas as pd
+import numpy as np
+
+# Series from a list
+series_list = pd.Series([10, 20, 30, 40], name="Scores")
+print("Series from list:\n", series_list)
+
+# Series from a NumPy array
+arr = np.array([1, 2, 3, 4])
+series_array = pd.Series(arr)
+print("\nSeries from NumPy array:\n", series_array)
+```
+**Instructions:**
+- In the file Lab6g.py, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
+- Create a numeric series from a NumPy array [2, 4, 6, 8] and name it `Evens`.
+- Create a numeric series from a dictionary: {'Alice': 25, 'Bob': 30, 'Charlie': 35} and name it `Ages`.
+- Create a string Series for grades and name st `Grades`:
+   - Values: ["<50", "50-59", "60-69", "70-79", "80-89", "90-100"]
+   - Index labels: ["F", "D", "C", "B", "A", "A+"]
+- Print all Series.
+- Print the first and last elements of `Numbers`, `Evens`.
+- Print the value for "Bob" from series_ages (use label-based indexing)
+- Print the values for indices "C" and "A+" from `Grades`.
+- Print the value "60-69" directly without the index.
+- Run your script with the command: `python ./lab6g.py` and verify the output.
+---
+
+### lab6h.py - Introduction to Pandas DataFrames
+**Objective:** Learn to create a DataFrame, explore its columns, rows, and attributes, access elements by label or position, and add new columns.
+
+A DataFrame is like a table or spreadsheet in Python. Each column is a Series, so a DataFrame can store numeric, string, or categorical data. DataFrames have rows and columns, can be labeled, and support row/column selection, addition of new columns, and basic analysis. Pandas DataFrame can be created in multiple ways; you can create them:
+- From a dictionary of lists
+- From a list of dictionaries
+- From a list of lists
+- From NumPy arrays
+- From external sources (CSV, Excel, SQL, etc.)
+
+Below is an example of creating a dataframe from the dictionary of lists:
+```Python
+import pandas as pd
+
+# Create a DataFrame from a dictionary that contains student course enrollment data
+data = {
+    "Student": ["Amira", "David", "Sofia", "Jamal"],
+    "Program": ["Computer Science", "Business", "Engineering", "Psychology"],
+    "Year": [1, 2, 3, 4],
+    "GPA": [3.6, 3.2, 3.9, 3.4]
+}
+
+df = pd.DataFrame(data)
+print("DataFrame:\n", df)
+
+# Access a column
+print("\nColumn 'GPA':\n", df["GPA"])
+
+# Access the first row
+print("\nFirst row:\n", df.iloc[0])
+```
+**Instructions:**
+- In your Lab6h.py write code to create a DataFrame with the following information about library books:
+  
+| Title                              | Author              | Year | Pages | Genre        |
+|------------------------------------|---------------------|------|-------|--------------|
+| "The Great Gatsby"                 | F. Scott Fitzgerald | 1925 | 180   | Fiction      |
+| "A Brief History of Time"          | Stephen Hawking     | 1988 | 212   | Science      |
+| "To Kill a Mockingbird"            | Harper Lee          | 1960 | 281   | Fiction      |
+| "The Art of Computer Programming"  | Donald Knuth        | 1968 | 672   | Computer Sci |
+| "Sapiens: A Brief History of Humankind" | Yuval Noah Harari | 2011 | 498   | History      |
+
+- Print the entire DataFrame.
+- Perform the following operations:
+- Print the `"Title"` column.  
+- Print the `"Author"` column.  
+- Print the first 3 rows using `.head()`.  
+- Print the number of rows and columns using `.shape`.  
+- Print the data type of each column using `.dtypes`.
+- Run your script with the command: `python ./lab6h.py` and verify the output.
+---
+### lab6i.py - Exploring and Analyzing a DataFrame
+**Objective:** Learn how to explore, summarize, and filter data in a DataFrame
+
+**Instructions:**
+- In your Lab6i.py file, create a DataFrame of student grades with the following data:
+```Python
+import pandas as pd
+
+data = {
+    "Name": ["Amira", "David", "Sofia", "Liam", "Noah"],
+    "Course": ["Math", "Math", "Science", "History", "Science"],
+    "Grade": [85, 92, 78, 88, 95],
+    "Year": [1, 2, 1, 3, 2]
+}
+
+df = pd.DataFrame(data)
+print("DataFrame:\n", df)
+```
+- Write code to do the following:
+   - Print the first 3 rows.
+   - Get summary statistics for numeric columns.
+   - Find all students with grades above 90.
+   - Print the names of students enrolled in Science courses.
+   - Sort the DataFrame by Grade in descending order.
+- **Hint:** Look into Pandas functions like .head(), .describe(), boolean indexing, column selection, and .sort_values() to complete these tasks.
+- Run your script with the command: `python ./lab6i.py` and verify the output.
+---
+### lab6j.py - Analyzing Real-World Movie Data
+**Objective:** Practice advanced Pandas operations including summary statistics, filtering, grouping, and basic plotting using a real dataset.
+
+CSV (Comma-Separated Values) files are widely used for storing tabular data. Pandas provides simple functions to read from and write to CSV files. In this task, you will work with a **real-world dataset**: the IMDB Top 250 movies. You will practice reading data from a CSV file, exploring it, performing aggregations, and visualizing results using Pandas and Matplotlib.
+
+To read a CSV file into a DataFrame, you can use the `pd.read_csv` function.
+```Python
+# Reading data from a CSV file
+df_from_csv = pd.read_csv('sample.csv')  # Replace 'sample.csv' with your file path
+print("\nDataFrame from CSV:\n", df_from_csv)
+```
+
+**Instructions:**
+- In your Lab6j.py file, create a new data frame from a csv file located in : https://github.com/itiievskyi/IMDB-Top-250/blob/master/imdb_top_250.csv.
+-  **Explore the DataFrame**:  
+   - Print a **summary** of the data (`info()` and `describe()`).  
+   - Print the **first 10** and **last 10 rows**.
+- **Basic analysis**:  
+   - Find the **earliest** and **latest** movie year (hint: `min()` and `max()` on the year column).  
+   - Print **unique values** in the `"Genre"` column.  
+   - Count how many movies are **not made in the USA**.
+- **Top-rated movies**: Find the **top 10 highest-rated movies** by the rating column.
+-  **Decade analysis**: Find out what the best decade of movies is:
+   -  Define a Python function that calculates the **decade** from the year.  
+     ```python
+     def get_decade(year):
+         return (year // 10) * 10
+     ```
+   - Add a **decade column** to the DataFrame.  
+   - Group the data by decade and calculate the **mean rating** per decade.
+- **Hint:** Use Pandas functions such as .info(), .describe(), .head(), .tail(), .unique(), .groupby(), .mean(), .sort_values().
+- Run your script with the command: `python ./lab6j.py` and verify the output.
+----
 ## INVESTIGATION 1: BASIC PLOTS AND CUSTOMIZATION
 
 ### lab7a.py - Your First Line Plot
