@@ -197,7 +197,7 @@ print("DataFrame:\n", df)
 ---
 
 ### Task 4 - Analyzing Real-World Movie Data
-**Objective:** Practice advanced Pandas operations including summary statistics, filtering, grouping, and basic plotting using a real dataset.
+**Objective:** Practice reading CSV files, exploring DataFrame structure, filtering, summarizing data, grouping values, and performing basic visual analysis with Pandas.
 
 CSV (Comma-Separated Values) files are widely used for storing tabular data. Pandas provides simple functions to read from and write to CSV files. In this task, you will work with a **real-world dataset**: the IMDB Top 250 movies. You will practice reading data from a CSV file, exploring it, performing aggregations, and visualizing results using Pandas and Matplotlib.
 
@@ -209,24 +209,25 @@ print("\nDataFrame from CSV:\n", df_from_csv)
 ```
 
 **Instructions:**
-- In your task4.py file, create a new data frame from a csv file located in : https://github.com/itiievskyi/IMDB-Top-250/blob/master/imdb_top_250.csv.
+- In your task4.py import Pandas.
+- Read the dataset from the raw CSV link:
+  ```python
+  url = "https://raw.githubusercontent.com/itiievskyi/IMDB-Top-250/master/imdb_top_250.csv"
+  df = pd.read_csv(url)
+  ```
 -  **Explore the DataFrame**:  
-   - Print a **summary** of the data (`info()` and `describe()`).  
-   - Print the **first 10** and **last 10 rows**.
+   - print `df.info()` — data types, non‑null counts.
+   - print `df.describe()` — summary statistics for numeric columns
+   - Print the first 10 and last 10 rows.
 - **Basic analysis**:  
    - Find the **earliest** and **latest** movie year (hint: `min()` and `max()` on the year column).  
-   - Print **unique values** in the `"Genre"` column.  
-   - Count how many movies are **not made in the USA**.
-- **Top-rated movies**: Find the **top 10 highest-rated movies** by the rating column.
--  **Decade analysis**: Find out what the best decade of movies is:
-   -  Define a Python function that calculates the **decade** from the year.  
+   - Print **unique values** in the `"Genre"` column.  Use `df["Genre"].unique()` 
+   - Count how many movies are not from the USA.
      ```python
-     def get_decade(year):
-         return (year // 10) * 10
+     non_usa_df = df[df["Country"] != "USA"]
+     non_usa_count = non_usa_df.shape[0]
      ```
-   - Add a **decade column** to the DataFrame.  
-   - Group the data by decade and calculate the **mean rating** per decade.
-- **Hint:** Use Pandas functions such as .info(), .describe(), .head(), .tail(), .unique(), .groupby(), .mean(), .sort_values().
+- **Top-rated movies**: Find the top 10 highest-rated movies by the rating column. Use `.sort_values()`.
 - Run your script with the command: `python ./task4.py` and verify the output.
 ----
 ## INVESTIGATION 2: BASIC PLOTS AND CUSTOMIZATION
