@@ -393,7 +393,6 @@ y4 = [10, 8, 6, 4, 2]
   
 - **Questions for Reflection:**
    - How does using subplots help compare multiple datasets?
-   - Why is a histogram appropriate for daily sales?
    - Could you combine different types of plots (line, scatter, bar) in the same figure? How?
      
 ---
