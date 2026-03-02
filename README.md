@@ -100,7 +100,7 @@ series_array = pd.Series(arr)
 print("\nSeries from NumPy array:\n", series_array)
 ```
 **Instructions:**
-- In the file Lab6g.py, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
+- In `task1.py`, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
 - Create a numeric series from a NumPy array [2, 4, 6, 8] and name it `Evens`.
 - Create a numeric series from a dictionary: {'Alice': 25, 'Bob': 30, 'Charlie': 35} and name it `Ages`.
 - Create a string Series for grades and name st `Grades`:
@@ -112,9 +112,10 @@ print("\nSeries from NumPy array:\n", series_array)
 - Print the values for indices "C" and "A+" from `Grades`.
 - Print the value "60-69" directly without the index.
 - Run your script with the command: `python ./lab6g.py` and verify the output.
+
 ---
 
-### lab6h.py - Introduction to Pandas DataFrames
+### Task 2 - Introduction to Pandas DataFrames
 **Objective:** Learn to create a DataFrame, explore its columns, rows, and attributes, access elements by label or position, and add new columns.
 
 A DataFrame is like a table or spreadsheet in Python. Each column is a Series, so a DataFrame can store numeric, string, or categorical data. DataFrames have rows and columns, can be labeled, and support row/column selection, addition of new columns, and basic analysis. Pandas DataFrame can be created in multiple ways; you can create them:
@@ -146,7 +147,7 @@ print("\nColumn 'GPA':\n", df["GPA"])
 print("\nFirst row:\n", df.iloc[0])
 ```
 **Instructions:**
-- In your Lab6h.py write code to create a DataFrame with the following information about library books:
+- In task2.py write code to create a DataFrame with the following information about library books:
   
 | Title                              | Author              | Year | Pages | Genre        |
 |------------------------------------|---------------------|------|-------|--------------|
@@ -164,12 +165,14 @@ print("\nFirst row:\n", df.iloc[0])
 - Print the number of rows and columns using `.shape`.  
 - Print the data type of each column using `.dtypes`.
 - Run your script with the command: `python ./lab6h.py` and verify the output.
+
 ---
-### lab6i.py - Exploring and Analyzing a DataFrame
+
+### Task 3 - Exploring and Analyzing a DataFrame
 **Objective:** Learn how to explore, summarize, and filter data in a DataFrame
 
 **Instructions:**
-- In your Lab6i.py file, create a DataFrame of student grades with the following data:
+- In your task3.py file, create a DataFrame of student grades with the following data:
 ```Python
 import pandas as pd
 
@@ -191,8 +194,10 @@ print("DataFrame:\n", df)
    - Sort the DataFrame by Grade in descending order.
 - **Hint:** Look into Pandas functions like .head(), .describe(), boolean indexing, column selection, and .sort_values() to complete these tasks.
 - Run your script with the command: `python ./lab6i.py` and verify the output.
+
 ---
-### lab6j.py - Analyzing Real-World Movie Data
+
+### Task 4 - Analyzing Real-World Movie Data
 **Objective:** Practice advanced Pandas operations including summary statistics, filtering, grouping, and basic plotting using a real dataset.
 
 CSV (Comma-Separated Values) files are widely used for storing tabular data. Pandas provides simple functions to read from and write to CSV files. In this task, you will work with a **real-world dataset**: the IMDB Top 250 movies. You will practice reading data from a CSV file, exploring it, performing aggregations, and visualizing results using Pandas and Matplotlib.
