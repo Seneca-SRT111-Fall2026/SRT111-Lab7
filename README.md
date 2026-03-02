@@ -398,35 +398,26 @@ y4 = [10, 8, 6, 4, 2]
 ---
 
 ### Task 10 - Plotting Real-World Data from CSV
-**Objective:** Learn to read a CSV file, process data with Pandas, and create multiple plots using Matplotlib.
-
-In this task, you will use **real-world movie data** to practice creating plots.  
-You will combine **line, bar, scatter, and histogram plots** to explore trends and relationships in the dataset.
+**Objective:** Read a real-world dataset using Pandas, analyze the data, and create multiple visualizations (line, bar, and histogram) using Matplotlib. You will work with the IMDB Top 250 Movies dataset.
 
 **Instructions:**
-- Add the following code in the file `task10.py`
-- Import the necessary libraries:
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-```
-- Read the CSV file from the following link:
+- Add the following code in the file `task10.py` to read the CSV file:
 ```Python
-url = "https://github.com/itiievskyi/IMDB-Top-250/blob/master/imdb_top_250.csv"
+url = "https://raw.githubusercontent.com/itiievskyi/IMDB-Top-250/master/imdb_top_250.csv"
 df = pd.read_csv(url)
 ```
-- Explore the dataset using df.head() and df.info().
+- Explore the dataset using `df.head()` and `df.info()`. This will help you understand the structure of the data, including columns such as "Title", "Year", "Rating", and "Genre".
 - Perform essential data processing:
    - Copy the Year column into a new series.
+     ```python
+     years = df["Year"].copy()
+     ```
    - Sort the years in ascending order.
    - Count the number of movies for each year (use value_counts() or a similar method).
-- Using Matplotlib, create at least three plots:
+- Using Matplotlib, create two plots:
    - Line plot: Show the trend of movie ratings over the years.
    - Bar plot: Show the number of movies per genre (df['Genre'].value_counts()).
-   - Histogram: X-axis = years, bar height = count of movies per year. If there are many unique years, display the histogram for the first 10 years.
 - Add **titles**, **axis labels**, and **legends** to all plots.
-- Optionally, arrange the plots in a subplot layout.
-- Adjust spacing with `plt.tight_layout()`.
 - Run your script with python ./task10.py and verify the output.
 ---
 
