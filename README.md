@@ -102,8 +102,7 @@ print("\nSeries from NumPy array:\n", series_array)
 ```
 
 **Instructions:**
-- In `task1.py`, import Pandas and NumPy.
-- Create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
+- In `task1.py`, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
 - Create a numeric series from a NumPy array [2, 4, 6, 8] and name it `Evens`.
 - Create a numeric series from a dictionary: {'Alice': 25, 'Bob': 30, 'Charlie': 35} and name it `Ages`.
 - Create a string Series for grades and name it `Grades`:
@@ -147,8 +146,7 @@ print("\nColumn 'GPA':\n", df["GPA"])
 print("\nFirst row:\n", df.iloc[0])
 ```
 **Instructions:**
-- In task2.py import Pandas.
-- write code to create a DataFrame with the following information about library books. You need build the data structure first using python dictionary, and then convert the dictionary to a DataFrame.
+- In task2.py Create a DataFrame with the following information about library books. You need build the data structure first using python dictionary, and then convert the dictionary to a DataFrame.
   
 | Title                              | Author              | Year | Pages | Genre        |
 |------------------------------------|---------------------|------|-------|--------------|
@@ -173,8 +171,7 @@ print("\nFirst row:\n", df.iloc[0])
 **Objective:** Practice inspecting, filtering, summarizing, and sorting data in a Pandas DataFrame. This task introduces basic analysis techniques used in real‑world data workflows.
 
 **Instructions:**
-- In your task3.py import Pandas.
-- Create a DataFrame of student grades with the following data:
+- Copy the following code task3.py. This code create a DataFrame of student grades.
 ```Python
 data = {
     "Name": ["Amira", "David", "Sofia", "Liam", "Noah"],
@@ -209,8 +206,7 @@ print("\nDataFrame from CSV:\n", df_from_csv)
 ```
 
 **Instructions:**
-- In your task4.py import Pandas.
-- Read the dataset from the raw CSV link:
+- Copy the following code in task4.py to read the dataset from the raw CSV link.
   ```python
   url = "https://raw.githubusercontent.com/itiievskyi/IMDB-Top-250/master/imdb_top_250.csv"
   df = pd.read_csv(url)
@@ -233,18 +229,22 @@ print("\nDataFrame from CSV:\n", df_from_csv)
 ## INVESTIGATION 2: BASIC PLOTS AND CUSTOMIZATION
 
 ### Task 5 - Your First Line Plot
-**Objective:** Learn how to create a simple line plot and label its axes and title.
-A line plot is one of the simplest and most commonly used visualizations. It is ideal for showing trends or changes over a sequence, such as time or numerical progression.
+**Objective:** Learn how to create a simple line plot using Matplotlib and add essential visual elements such as a title, axis labels, and a displayed figure.
+
+A line plot is useful for showing trends, patterns, or changes over a sequence of values.
 
 **Instructions:**
-- Add the following code in the file `task5.py`.
+- Add the following code in the file `task5.py`. This defines the x‑values and corresponding y‑values you will plot.
 ```Python
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
 y = [2, 4, 6, 8, 10]
 ```
 - Plot `y` versus `x` using `plt.plot()`.
-- Add a **title**, **x-axis label**, and **y-axis label**.
+  ```python
+  plt.plot(x, y)
+  ```
+- Provide meaningful axis labels and a descriptive title:
    - Use `plt.xlabel('Your X label')` and `plt.ylabel('Your Y label')` for axes labels.
    - Use `plt.title('Your Title')` to add a title.
 - Display the plot using `plt.show()`.
