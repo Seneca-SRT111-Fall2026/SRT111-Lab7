@@ -7,35 +7,35 @@ Environment: GitHub Codespaces
 ----
 ## Introduction
 
-In this lab, you will create 6  Python scripts. All scripts must be written in GitHub Codespaces. 
-Data visualization is a key skill for understanding and communicating insights from data.
-**Matplotlib** is one of the most powerful and widely used Python libraries for creating a wide range of static, animated, and interactive visualizations.
-In this lab, you will explore how to turn raw data into meaningful plots, understand the basics of different plot types, and learn how to enhance visualizations for clarity and impact.
-By completing these tasks, you will gain hands-on experience in turning raw data into clear and meaningful visualizations that make your findings easier to interpret and communicate.
+In this lab, you will work in GitHub Codespaces to create ten Python scripts that explore data manipulation with Pandas and data visualization with Matplotlib. These two libraries are essential tools in data analysis:
+
+- **Pandas** gives you powerful tools to load, clean, filter, group, summarize, and transform datasets using intuitive structures such as Series and DataFrames. You will practice creating these structures, performing aggregations, extracting insights, and working with real CSV data.
+- **Matplotlib** enables you to communicate those insights visually. You will learn how to create line plots, bar charts, histograms, scatter plots, and subplots, as well as how to customize titles, labels, grids, legends, and styles to improve clarity and impact.
+
+By completing this lab, you will gain hands‑on experience working with real‑world data, applying Pandas to analyze it, and using Matplotlib to turn your findings into clear and meaningful visualizations.
 
 ----
 
 # Lab Objectives
-- Understand the role of Pandas in data analysis.
-- Create and manipulate Pandas Series and DataFrames.
-- Perform filtering, grouping, and aggregations in Pandas.
-- Apply both libraries to solve data-driven problems.
-- Understand the basics of Matplotlib and its plotting functions.
-- Generate and customize various plot types such as line, scatter, bar, and histogram.
-- Apply visual elements (titles, labels, legends, grid, styles) to improve readability.
-- Use subplots to compare multiple visualizations side by side.
-- Annotate and highlight key data points in a plot.
-- Visualize real-world style data and CSV-based datasets.
-- Apply Matplotlib skills to interpret and communicate data effectively.
+- Understand the role of Pandas in data analysis and its core structures (Series and DataFrames).
+- Create Pandas Series and DataFrames from lists, dictionaries, NumPy arrays, and CSV files.
+- Perform common operations such as filtering, sorting, grouping, and aggregation.
+- Explore datasets using descriptive statistics, summaries, and DataFrame inspection methods.
+- Add new columns, work with derived data (e.g., decades), and interpret real‑world datasets.
+- Understand the purpose of Matplotlib and its basic plotting functions.
+- Create and customize line plots, scatter plots, bar charts, and histograms.
+- Add visual elements such as titles, labels, legends, grid lines, and styles to improve readability.
+- Use subplots to compare multiple visualizations within a single figure.
+- Apply visualization techniques to explore and communicate insights from real datasets.
 
 ----
 
 ## Before You Begin
 
-Before starting this lab, ensure the following:
+Before starting this lab, complete the following steps:
 
 1. Open your GitHub repository and launch GitHub Codespaces.
-2.  Inside the repository, create six Python files:
+2.  Inside the repository, create **ten** Python files:
    - `task1.py`
    - `task2.py`
    - `task3.py`
@@ -47,12 +47,12 @@ Before starting this lab, ensure the following:
    -  `task9.py`
    -  `task10.py`
 
-3. At the top of each Python file, add your name and date in the comment section.
-4. Import the numpy, pands or matplotlib library whichever is required:
+3. At the top of each Python file, include your name and the date in a comment.
+4. Import only the libraries required for each task. Common imports you may need include:
 
 ```python
 import numpy as np
-import pands as pd
+import pandas as pd
 import matplotlib.pyplot as plt
 ```
 
@@ -60,15 +60,15 @@ import matplotlib.pyplot as plt
 
 # Submission Instructions
 For each task:
-1. **Write the script** in Codespaces.  
-2. **Run the script** from the **terminal**.  
-3. **Take a screenshot** that clearly shows:  
+1. Write the script in Codespaces.  
+2. Run the script from the **terminal**.  
+3. Take a screenshot that clearly shows:  
    - Your **code** in the editor.  
    - The **terminal output**, including your **username** visible in the terminal.  
-4. **Insert the screenshot** into a Word document under the heading that matches the task name:  
+4. Insert the screenshot into a Word document under the heading that matches the task name:  
    - Example: **Task 1**, **Task 2**, **Task 3**, etc.  
-5. After completing all tasks, **convert the Word document to PDF**.  Name the PDF file using your **yoursenecausername.pdf**
-6. **Submit the PDF file** as your final lab submission on Blackbaord.
+5. After completing all tasks, convert the Word document to PDF.  Name the PDF file using your `yoursenecausername.pdf`
+6. Submit the PDF file as your final lab submission on Blackbaord.
 
 ----
 
@@ -82,9 +82,10 @@ Why use Pandas:
 - Combine multiple datasets efficiently.
 
 ### Task 1 - Creating and Exploring Pandas Series
-**Objective:** Learn how to create Pandas Series with values, index labels, and a name, and access elements by position or label.
+**Objective:** Learn how to create Pandas Series with values, index labels, and a name, and practice accessing elements using both label-based and position-based indexing
 
-A Pandas Series is like a single column of data with labels (index) for each element. It can also have a name, similar to a column title in a spreadsheet. Series can be created from lists, NumPy arrays, or dictionaries.
+A Pandas Series is a one‑dimensional labeled array. Each value has an index, and a Series can also have a descriptive name (like a column title). You can create Series from lists, NumPy arrays, or dictionaries.
+
 Look at the example given below:
 ```Python
 import pandas as pd
@@ -99,31 +100,30 @@ arr = np.array([1, 2, 3, 4])
 series_array = pd.Series(arr)
 print("\nSeries from NumPy array:\n", series_array)
 ```
+
 **Instructions:**
-- In `task1.py`, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
+- In `task1.py`, import Pandas and NumPy.
+- Create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
 - Create a numeric series from a NumPy array [2, 4, 6, 8] and name it `Evens`.
 - Create a numeric series from a dictionary: {'Alice': 25, 'Bob': 30, 'Charlie': 35} and name it `Ages`.
-- Create a string Series for grades and name st `Grades`:
+- Create a string Series for grades and name it `Grades`:
    - Values: ["<50", "50-59", "60-69", "70-79", "80-89", "90-100"]
    - Index labels: ["F", "D", "C", "B", "A", "A+"]
 - Print all Series.
-- Print the first and last elements of `Numbers`, `Evens`.
-- Print the value for "Bob" from series_ages (use label-based indexing)
-- Print the values for indices "C" and "A+" from `Grades`.
-- Print the value "60-69" directly without the index.
+- **Access and print specific data**
+   - Print the first and last elements of `Numbers` and `Evens`. (use `.iloc[0]` and `.iloc[-1]`)
+   - Print the value for "Bob" from `Ages` (use label-based indexing `Ages["Bob"]`)
+   - Print the values for indices "C" and "A+" from `Grades`.
+   - Print the value "60-69" by using positional indexing, not by typing the value directly.
 - Run your script with the command: `python ./task1.py` and verify the output.
 
 ---
 
 ### Task 2 - Introduction to Pandas DataFrames
-**Objective:** Learn to create a DataFrame, explore its columns, rows, and attributes, access elements by label or position, and add new columns.
+**Objective:** Learn how to create a Pandas DataFrame, explore its columns and rows, view its attributes, and access elements using label‑based and position‑based selection.
 
-A DataFrame is like a table or spreadsheet in Python. Each column is a Series, so a DataFrame can store numeric, string, or categorical data. DataFrames have rows and columns, can be labeled, and support row/column selection, addition of new columns, and basic analysis. Pandas DataFrame can be created in multiple ways; you can create them:
-- From a dictionary of lists
-- From a list of dictionaries
-- From a list of lists
-- From NumPy arrays
-- From external sources (CSV, Excel, SQL, etc.)
+A DataFrame is a two‑dimensional labeled data structure similar to a spreadsheet or a table. Each column is a Pandas Series, and a DataFrame can store mixed data types—numeric, string, categorical, etc.
+You can create DataFrames from dictionaries, lists of dictionaries, lists of lists, NumPy arrays, or external files such as CSVs.
 
 Below is an example of creating a dataframe from the dictionary of lists:
 ```Python
@@ -147,7 +147,8 @@ print("\nColumn 'GPA':\n", df["GPA"])
 print("\nFirst row:\n", df.iloc[0])
 ```
 **Instructions:**
-- In task2.py write code to create a DataFrame with the following information about library books:
+- In task2.py import Pandas.
+- write code to create a DataFrame with the following information about library books. You need build the data structure first using python dictionary, and then convert the dictionary to a DataFrame.
   
 | Title                              | Author              | Year | Pages | Genre        |
 |------------------------------------|---------------------|------|-------|--------------|
@@ -158,24 +159,23 @@ print("\nFirst row:\n", df.iloc[0])
 | "Sapiens: A Brief History of Humankind" | Yuval Noah Harari | 2011 | 498   | History      |
 
 - Print the entire DataFrame.
-- Perform the following operations:
-- Print the `"Title"` column.  
-- Print the `"Author"` column.  
-- Print the first 3 rows using `.head()`.  
-- Print the number of rows and columns using `.shape`.  
-- Print the data type of each column using `.dtypes`.
+- **Perform the following operations:**
+   - Print the `"Title"` column.  
+   - Print the `"Author"` column.  
+   - Print the first 3 rows using `.head(3)`.  
+   - Print the number of rows and columns using `.shape`.  
+   - Print the data type of each column using `.dtypes`.
 - Run your script with the command: `python ./task2.py` and verify the output.
 
 ---
 
 ### Task 3 - Exploring and Analyzing a DataFrame
-**Objective:** Learn how to explore, summarize, and filter data in a DataFrame
+**Objective:** Practice inspecting, filtering, summarizing, and sorting data in a Pandas DataFrame. This task introduces basic analysis techniques used in real‑world data workflows.
 
 **Instructions:**
-- In your task3.py file, create a DataFrame of student grades with the following data:
+- In your task3.py import Pandas.
+- Create a DataFrame of student grades with the following data:
 ```Python
-import pandas as pd
-
 data = {
     "Name": ["Amira", "David", "Sofia", "Liam", "Noah"],
     "Course": ["Math", "Math", "Science", "History", "Science"],
@@ -186,13 +186,12 @@ data = {
 df = pd.DataFrame(data)
 print("DataFrame:\n", df)
 ```
-- Write code to do the following:
-   - Print the first 3 rows.
-   - Get summary statistics for numeric columns.
-   - Find all students with grades above 90.
-   - Print the names of students enrolled in Science courses.
-   - Sort the DataFrame by Grade in descending order.
-- **Hint:** Look into Pandas functions like .head(), .describe(), boolean indexing, column selection, and .sort_values() to complete these tasks.
+- Perform the following analyses
+   - Print the first 3 rows. Use `.head(3)` to preview the beginning of the dataset.
+   - Use .describe() to view mean, min, max, etc.
+   - Use boolean filtering on the Grade column to find all students with grades above 90.
+   - Filter rows where Course == "Science" and select only the "Name" column.
+   - Sort the DataFrame by Grade in descending order. Use `.sort_values()` with `ascending=False`.
 - Run your script with the command: `python ./task3.py` and verify the output.
 
 ---
