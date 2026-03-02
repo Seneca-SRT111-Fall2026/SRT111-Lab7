@@ -252,10 +252,9 @@ y = [2, 4, 6, 8, 10]
 ---
 
 ### Task 6- Plotting Multiple Lines
-**Objective:** Learn how to plot multiple lines on the same figure and customize their appearance with colors, line styles, and legends.
+**Objective:** Learn how to plot multiple lines on the same graph, customize their appearance (color, style), and add a legend and grid to improve readability.
 
-Often, we want to compare two or more datasets on the same graph.  
-Plotting multiple lines together allows us to see relationships or differences between the datasets clearly.
+Plotting multiple lines allows you to compare datasets visually on the same axes.
 
 **Instructions:**
 - Add the following code in the file `task6.py`.  Note that we have two lists of `y` values as shown below. We will plot both of them in separate colors.
@@ -276,12 +275,13 @@ plt.plot(x, y2, color='red', linestyle='--', label='y = x^2')
 - Add **grid lines** for better readability. Use `plt.grid(True)` to show grid lines.
 - Display the plot using `plt.show()`.
 - Run the script using the command: `python ./task6.py` and verify the output.
+  
 ---
-### Task 7- Scatter Plots
-**Objective:** Learn how to create a scatter plot and customize point appearance, including color, size, and transparency.
 
-A **scatter plot** is used to visualize the relationship between two variables.  
-Each point represents an observation, making it easier to identify trends, clusters, or outliers.
+### Task 7- Scatter Plots
+**Objective:** Learn how to create a scatter plot using Matplotlib and customize point color, size, and transparency.
+
+Scatter plots are useful for visualizing relationships or patterns between two numerical variables.
 
 **Instructions:**
 - Add the following code in the file `task7.py`
@@ -306,30 +306,45 @@ y = [99, 86, 87, 88, 100, 86, 103, 87]
 ### Task 8 - Bar Charts and Histograms
 **Objective:** Learn how to create bar charts and histograms, and understand their differences and uses.
 
-- A **bar chart** is used to compare quantities across different categories.  
-- A **histogram** shows the distribution of numerical data by grouping it into bins.  
+- A **bar chart** compares quantities across categories.
+- A **histogram** shows how often numerical values fall within specific ranges (bins).
 These plots help visualize categorical and frequency-based data effectively.
 
 **Instructions:**
 - Add the following code in the file `task8.py`
-- Import Matplotlib and create a list of categories and corresponding values. Example:
+
 ```Python
 import matplotlib.pyplot as plt
 products = ['Coffee', 'Tea', 'Juice', 'Soda']
 sales = [150, 120, 90, 60]
 ```
-- Plot a bar chart showing sales per product.
-- Add a **title**, **x-axis label**, and **y-axis label**.
-   - Hint: Use `plt.bar()` for categorical comparisons.
-- Next, create a list of numerical data representing daily sales for all products combined:
+- Create a bar chart showing sales per product
+```python
+plt.figure()  # Create a new figure
+plt.bar(products, sales)
+plt.xlabel("Product")
+plt.ylabel("Sales (Units)")
+plt.title("Product Sales Comparison")
+plt.show()
+```
+- The bar chart compares sales across four categories.
+- Next, create a list of daily sales values:
 ```Python
 daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
 ```
-- Plot a histogram to visualize the distribution of daily sales.
-- Experiment with the `bins` parameter.
-- Add a **title** and **axis** labels.
-   - Hint: Use `plt.hist()` for numeric distributions.
-- Run the script using the command: `python ./lab7d.py` and verify the output.
+- Create a histogram showing the distribution of daily sales.
+```python
+plt.figure()  # Start a new figure for the histogram
+plt.hist(daily_sales, bins=5)  # You can change the number of bins
+plt.xlabel("Daily Sales")
+plt.ylabel("Frequency")
+plt.title("Distribution of Daily Sales")
+plt.show()
+```
+- bins=5 groups the numbers into 5 ranges.
+- Try changing it to bins=3 or bins=8 to see how it affects the shape of the graph.
+- Run the script using the command: `python ./task8.py` and verify the output.
+  
 - **Questions for Reflection:**
    - Why is a bar chart appropriate for the product sales data?
    - Why is a histogram appropriate for daily sales?
@@ -339,21 +354,21 @@ daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
 ## INVESTIGATION 3: ADVANCED VISUALIZATION AND REAL WORLD DATA 
 
 ### Task 9 - Subplots
-**Objective:** Learn to create multiple plots in a single figure using `plt.subplot()` and customize each subplot.
-
+**Objective:** Learn how to display multiple plots in a single figure using Matplotlib’s subplot() function. Subplots allow you to compare different datasets side‑by‑side in a single window.
 Sometimes, you want to **display multiple plots in a single figure** for easy comparison.  
 Matplotlib’s **subplots** allow you to arrange multiple plots in rows and columns within the same figure.
 For example: A **2×2 subplot layout** means:
-- 2 rows and 2 columns → 4 plots in total  
-- Each plot has an **index** to specify its position:  
-  - 1 → Top-left  
-  - 2 → Top-right  
-  - 3 → Bottom-left  
-  - 4 → Bottom-right  
+- 2 rows
+- 2 columns
+- 4 total plots  
+- Each subplot is selected by its index:
+  - 1 → top-left  
+  - 2 → top-right  
+  - 3 → bottom-left  
+  - 4 → bottom-right  
 
 **Instructions:**
 - Add the following code in the file `task9.py`
-- Import Matplotlib and prepare the data. Example:
 ```Python
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
@@ -362,27 +377,28 @@ y2 = [1, 3, 5, 7, 9]
 y3 = [5, 3, 6, 2, 7]
 y4 = [10, 8, 6, 4, 2]
 ```
-- Create a 2×2 subplot layout:
-   - Top-left: Line plot of y1 vs x
-   - Top-right: Line plot of y2 vs x
+- Create a 2×2 grid of subplots: (the first plot is done for you, extend the idea to complete the remaining 3 plots)
+   - Top-left: Line plot of y1 vs x 
+     ```python
+     plt.subplot(2, 2, 1) # The first 2 = number of rows, the second 2 = number of columns, the third 1 = index of this subplot (top-left).
+     plt.plot(x, y1)
+     plt.title("Plot 1: y1 vs x")
+```
+   - Top-right: Line plot of y2 vs x 
    - Bottom-left: Line plot of y3 vs x
    - Bottom-right: Line plot of y4 vs x
 
-**Example to start with:**
-```Python
-plt.subplot(2, 2, 1)  # Selects the top-left plot in a 2x2 grid
-plt.plot(x, y1)
-plt.title("Plot 1")
 ```
-- The first 2 = number of rows, the second 2 = number of columns, the third 1 = index of this subplot (top-left).
-- Extend this idea to plot `y2`, `y3`, and `y4` in the remaining subplots.
 - Adjust spacing so that titles and labels do not overlap (hint: `plt.tight_layout()`).
 - Run the script using the command: `python ./lab7e.py` and verify the output.
+  
 - **Questions for Reflection:**
    - How does using subplots help compare multiple datasets?
    - Why is a histogram appropriate for daily sales?
    - Could you combine different types of plots (line, scatter, bar) in the same figure? How?
+     
 ---
+
 ### Task 10 - Plotting Real-World Data from CSV
 **Objective:** Learn to read a CSV file, process data with Pandas, and create multiple plots using Matplotlib.
 
