@@ -1,4 +1,12 @@
-# Lab 7
+# Lab 7: Pandas, MatplotLib
+**Weight:** 2% <br>
+**Work Type:** Individual <br>
+Environment: GitHub Codespaces
+**Submission Format:** Screenshots
+
+----
+## Introduction
+
 In this lab, you will create 6  Python scripts. All scripts must be written in GitHub Codespaces. 
 Data visualization is a key skill for understanding and communicating insights from data.
 **Matplotlib** is one of the most powerful and widely used Python libraries for creating a wide range of static, animated, and interactive visualizations.
@@ -22,6 +30,34 @@ By completing these tasks, you will gain hands-on experience in turning raw data
 
 ----
 
+## Before You Begin
+
+Before starting this lab, ensure the following:
+
+1. Open your GitHub repository and launch GitHub Codespaces.
+2.  Inside the repository, create six Python files:
+   - `task1.py`
+   - `task2.py`
+   - `task3.py`
+   - `task4.py`
+   - `task5.py`
+   - `task6.py`
+   - `task7.py`
+   -  `task8.py`
+   -  `task9.py`
+   -  `task10.py`
+
+3. At the top of each Python file, add your name and date in the comment section.
+4. Import the numpy, pands or matplotlib library whichever is required:
+
+```python
+import numpy as np
+import pands as pd
+import matplotlib.pyplot as plt
+```
+
+----
+
 # Submission Instructions
 For each task:
 1. **Write the script** in Codespaces.  
@@ -30,13 +66,13 @@ For each task:
    - Your **code** in the editor.  
    - The **terminal output**, including your **username** visible in the terminal.  
 4. **Insert the screenshot** into a Word document under the heading that matches the task name:  
-   - Example: **Lab7a**, **Lab7b**, **Lab7c**, etc.  
+   - Example: **Task 1**, **Task 2**, **Task 3**, etc.  
 5. After completing all tasks, **convert the Word document to PDF**.  Name the PDF file using your **yoursenecausername.pdf**
 6. **Submit the PDF file** as your final lab submission on Blackbaord.
 
 ----
 
-## INVESTIGATION 2: CREATING AND USING SERIES AND DATA FRAMES FROM Pandas
+## INVESTIGATION 1: CREATING AND USING SERIES AND DATA FRAMES FROM Pandas
 Pandas is a Python library used for data manipulation and analysis. It provides two main data structures:
 - Series – a one-dimensional labeled array, similar to a column in a spreadsheet or a 1D NumPy array with labels.
 - DataFrame – a two-dimensional labeled data structure, like a table with rows and columns.
@@ -45,7 +81,7 @@ Why use Pandas:
 - Perform filtering, grouping, and aggregation.
 - Combine multiple datasets efficiently.
 
-### lab6g.py - Creating and Exploring Pandas Series
+### Task 1 - Creating and Exploring Pandas Series
 **Objective:** Learn how to create Pandas Series with values, index labels, and a name, and access elements by position or label.
 
 A Pandas Series is like a single column of data with labels (index) for each element. It can also have a name, similar to a column title in a spreadsheet. Series can be created from lists, NumPy arrays, or dictionaries.
