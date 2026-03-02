@@ -383,12 +383,10 @@ y4 = [10, 8, 6, 4, 2]
      plt.subplot(2, 2, 1) # The first 2 = number of rows, the second 2 = number of columns, the third 1 = index of this subplot (top-left).
      plt.plot(x, y1)
      plt.title("Plot 1: y1 vs x")
-```
+   ```
    - Top-right: Line plot of y2 vs x 
    - Bottom-left: Line plot of y3 vs x
    - Bottom-right: Line plot of y4 vs x
-
-```
 - Adjust spacing so that titles and labels do not overlap (hint: `plt.tight_layout()`).
 - Run the script using the command: `python ./lab7e.py` and verify the output.
   
