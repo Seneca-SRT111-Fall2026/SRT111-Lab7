@@ -378,7 +378,10 @@ y3 = [5, 3, 6, 2, 7]
 y4 = [10, 8, 6, 4, 2]
 ```
 - Create a 2×2 grid of subplots: (the first plot is done for you, extend the idea to complete the remaining 3 plots)
-   - Top-left: Line plot of y1 vs x 
+   - Top-left: Line plot of y1 vs x
+     ```python
+     #hello
+     ```
    - Top-right: Line plot of y2 vs x 
    - Bottom-left: Line plot of y3 vs x
    - Bottom-right: Line plot of y4 vs x
