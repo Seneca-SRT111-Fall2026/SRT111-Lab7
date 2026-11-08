@@ -469,7 +469,6 @@ Complete the following tasks independently after the scheduled lab using VS Code
 - Download `security_log.csv` from Blackboard and save it in the `Lab07` folder.
 - Open the `Lab07` folder in VS Code.
 - Create all Part B files inside the `Lab07` folder. Use these names **exactly**, all in lower case: `task4.py`, `task5.py`, `task6.py`, `task7.py`.
-- Make sure Pandas and Matplotlib are installed (see [Installing Pandas and Matplotlib](#installing-pandas-and-matplotlib)).
 
 **For each task:**
 
