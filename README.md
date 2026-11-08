@@ -83,18 +83,6 @@ STUDENT_ID = 123456789      # replace with your own 9-digit student ID
 - **First**, run your task with the example ID `123456789` and compare your output with the expected output in this README. When it matches, your code is correct.
 - **Then** change `123456789` to your own student ID (the same in both files), run the script again, and push that version. Work submitted with the example ID, or with an ID that is not yours, receives **zero** for the task.
 
-## Installing Pandas and Matplotlib
-
-In the VS Code terminal (or a Jupyter Lab terminal), run:
-
-```text
-python -m pip install pandas matplotlib
-```
-
-On a Mac, use `python3` instead of `python` if `python` is not found. NumPy is installed automatically with Pandas.
-
-> **Note:** The expected outputs were produced with Pandas 3. If you have Pandas 2, text columns are shown as `object` instead of `str` (for example `dtype: object`). That is fine.
-
 ---
 
 ## Part A - In-Class Lab [30% of Lab Marks]
