@@ -54,7 +54,7 @@ For every script created in this lab include the following comment block at the 
 |---|---|---|
 | `security_log.csv` | Tasks 4 and 7 | Download it from Blackboard (Lab 7 starter files) and save it in your `Lab07` folder. |
 
-`security_log.csv` is a small firewall log: 300 connection attempts to a company network, one event per line. It was made up for this course, so the events are not real. It has 6 columns:
+`security_log.csv` is a small firewall log: 300 connection attempts to a company network, one event per line. It has 6 columns:
 
 | Column | Meaning | Example |
 |---|---|---|
