@@ -958,10 +958,8 @@ SRT111F2026/                   <- your repository, with exactly this name
 - Do **not** rename the repository, and do not put the files in a sub-folder of `Lab07` or at the top level of the repository.
 - Run every script from inside the `Lab07` folder, so the PNG files are created there. Do not rename them.
 - Run `task7.py` again **after** you put in your own student ID, so the pushed `security_charts.png` shows your ID.
-- Part A files (`task1.py` to `task3.py`) are graded in class. You may also push them to `Lab07`; they will not affect your Part B grade.
 - Commit and push the `Lab07` folder to GitHub. Open your repository on github.com in a browser and confirm that all ten files are inside `Lab07` and that the PNG images open.
 - On Blackboard, submit **only the link** to your repository, for example: `https://github.com/yourgithubusername/SRT111F2026`
-- No screenshots and no PDF are required.
 
 ### Part B Grading Checklist
 
