@@ -6,7 +6,7 @@
 <b>Percentage Towards Final Grade:</b> 2%
 </p>
 
-In Lab 6, you used NumPy arrays to do fast maths on numbers. Real data rarely arrives as a plain grid of numbers, though. It comes as a table: IP addresses next to ports and timestamps, student names next to courses and grades. In the first part of this lab, you will work with **Pandas**, the Python library for tabular data. Pandas is built on top of NumPy and gives you two structures: the **Series** (one labelled column) and the **DataFrame** (a whole table). You will create them, inspect them, and then filter, sort and group them to answer questions about the data.
+In Lab 6, you used NumPy arrays to do fast maths on numbers. Real data rarely arrives as a plain grid of numbers, though. It comes as a table: IP addresses next to ports and timestamps, student names next to courses and grades. In the first part of this lab, you will work with **Pandas**, the Python library for tabular data. Pandas is built on top of NumPy and gives you two structures: the **Series** (one labelled column) and the **DataFrame** (a whole table). You will create them, inspect them, and then filter and sort them and add new columns to answer questions about the data.
 
 In the second part, you will act as a **security analyst**. You will load a small **firewall log** from a CSV file, use your **student ID** to pick your own sample of events, and answer a few simple questions about it with Pandas. Then you will use **Matplotlib** to turn numbers into pictures: line plots, scatter plots, bar charts and histograms, and finally a figure with two charts of your own firewall data. Every chart is **saved to a PNG file** with an exact file name, so your work can be checked from your GitHub repository without any screenshots.
 
@@ -32,7 +32,7 @@ By the end of this lab, you should be able to:
 - Create a DataFrame from a dictionary of lists and read one from a CSV file with `pd.read_csv()`.
 - Inspect data with `head()` and `shape`.
 - Select data by label with `[]` and `loc`, and by position with `iloc`.
-- Filter rows with a condition, sort with `sort_values()`, count with `value_counts()`, and average groups with `groupby()`.
+- Filter rows with a condition, sort with `sort_values()`, count with `value_counts()`, and add new columns calculated from existing ones.
 - Load a CSV file with `pd.read_csv()` and answer simple questions about your own sample of it.
 - Create line plots, bar charts, scatter plots and histograms with Matplotlib.
 - Add titles, axis labels, legends, grid lines, colours, markers and line styles to a plot.
@@ -81,6 +81,19 @@ STUDENT_ID = 123456789      # replace with your own 9-digit student ID
 - `select_my_events()` (given) uses `sample()` to pick 50 random rows. The `random_state` number decides **which** rows are picked: the same number always gives the same rows, so your student ID always gives you the same 50 events.
 - **First**, run your task with the example ID `123456789` and compare your output with the expected output in this README. When it matches, your code is correct.
 - **Then** change `123456789` to your own student ID (the same in both files), run the script again, and push that version. Work submitted with the example ID, or with an ID that is not yours, receives **zero** for the task.
+
+## Installing Pandas and Matplotlib
+
+In the VS Code terminal (or a Jupyter Lab terminal), run:
+
+```text
+python -m pip install pandas matplotlib
+```
+
+On a Mac, use `python3` instead of `python` if `python` is not found. NumPy is installed automatically with Pandas.
+
+> **Note:** The expected outputs were produced with Pandas 3. If you have Pandas 2, text columns are shown as `object` instead of `str` (for example `dtype: object`). That is fine.
+
 ---
 
 ## Part A - In-Class Lab [30% of Lab Marks]
@@ -93,7 +106,7 @@ Complete all assigned in-class tasks during your scheduled lab.
 |---|---|
 | Task 1 - Creating and Exploring Pandas Series | 1.0 |
 | Task 2 - Creating and Exploring a DataFrame | 1.0 |
-| Task 3 - Filtering, Sorting and Grouping a DataFrame | 1.0 |
+| Task 3 - Filtering, Sorting and Adding Columns | 1.0 |
 | **Total** | **3** |
 
 - This part can be completed in Jupyter Lab or VS Code. You have a choice. I recommend using Jupyter Lab.
@@ -328,7 +341,7 @@ Author of the book in row 2: Harper Lee
 
 <details markdown="1">
 
-<summary><b>Quick Reference: Filtering, Sorting and Grouping</b></summary>
+<summary><b>Quick Reference: Filtering, Sorting and Adding Columns</b></summary>
 
 <br>
 
@@ -348,19 +361,20 @@ df.sort_values("GPA", ascending=False)     # highest first
 
 Sorting does not change `df`. It returns a new, sorted DataFrame. The original index labels move with their rows.
 
-**Grouping.** `groupby()` splits the rows into groups that share a value, then summarises each group:
+**Adding a column.** Assigning to a new column name creates that column. The calculation is done for every row at once, with no loop:
 
 ```python
-df.groupby("Program")["GPA"].mean()        # average GPA for each program
+df["Points"] = df["GPA"] * 10              # a calculated column: 3.6 -> 36.0
+df["Dean's List"] = df["GPA"] >= 3.5       # a flag column: True or False for each row
 ```
 
-The result is a Series whose labels are the group names, sorted alphabetically.
+A **flag column** holds `True` or `False`, so you can see at a glance which rows meet a condition.
 
 </details>
 
-### Task 3 - Filtering, Sorting and Grouping a DataFrame
+### Task 3 - Filtering, Sorting and Adding Columns
 
-**Objective:** Practice filtering rows with a condition, sorting, and grouping.
+**Objective:** Practice filtering rows with a condition, sorting, and adding a flag column.
 
 **Instructions:**
 
@@ -383,7 +397,8 @@ The result is a Series whose labels are the group names, sorted alphabetically.
   def analyse_grades(df):
       # 1. Print the students with a grade above 90 (use df[df["Grade"] > 90])
       # 2. Print the DataFrame sorted by grade, highest first (use sort_values with ascending=False)
-      # 3. Print the average grade for each course (use groupby("Course")["Grade"].mean())
+      # 3. Add a flag column named Honours that is True when Grade is 85 or more
+      #    (use df["Honours"] = df["Grade"] >= 85), then print the whole DataFrame
       pass
 
 
@@ -427,12 +442,14 @@ Sorted by grade (highest first):
 2  Sofia  Science     78
 5   Maya  History     71
 
-Average grade per course:
-Course
-History    79.5
-Math       88.5
-Science    86.5
-Name: Grade, dtype: float64
+With an Honours column:
+    Name   Course  Grade  Honours
+0  Amira     Math     85     True
+1  David     Math     92     True
+2  Sofia  Science     78    False
+3   Liam  History     88     True
+4   Noah  Science     95     True
+5   Maya  History     71    False
 ```
 
 > **Think about it:** In the sorted table, the index labels on the left are no longer `0, 1, 2, ...`. Why did Pandas keep the original labels?
@@ -489,16 +506,16 @@ Complete the following tasks independently after the scheduled lab using VS Code
 | Which rows match a condition? | `df[df["Action"] == "BLOCKED"]` |
 | How many rows match? | `df[df["Action"] == "BLOCKED"].shape[0]` |
 | How many times does each value appear? | `df["Service"].value_counts()` |
-| What is the average for each group? | `df.groupby("Service")["Bytes"].mean()` |
+| How do I add a calculated column? | `df["KB"] = df["Bytes"] / 1024` |
 | Which rows have the largest values? | `df.sort_values("Bytes", ascending=False).head(3)` |
 
-`value_counts()` lists the most common value first. `.round(1)` rounds the results to 1 decimal place.
+`value_counts()` lists the most common value first. `.round(1)` rounds values to 1 decimal place.
 
 </details>
 
 ### Task 4 - Analysing a Firewall Log with Pandas
 
-**Objective:** Practice reading a CSV file and answering simple questions about your own sample of data with `head()`, `shape`, filtering, `value_counts()`, `groupby()` and `sort_values()`.
+**Objective:** Practice reading a CSV file and answering simple questions about your own sample of data with `head()`, `shape`, filtering, `value_counts()`, a calculated column and `sort_values()`.
 
 **Instructions:**
 
@@ -542,9 +559,9 @@ Complete the following tasks independently after the scheduled lab using VS Code
       # 2. Count the blocked events: keep the rows where my_log["Action"] == "BLOCKED",
       #    store them in blocked, and print blocked.shape[0]. Then print an empty line.
       # 3. Print the number of events per service (use my_log["Service"].value_counts())
-      # 4. Print the average Bytes per service, rounded to 1 decimal place
-      #    (use my_log.groupby("Service")["Bytes"].mean().round(1))
-      # 5. Print the 3 largest transfers
+      # 4. Add a column named KB with the size in kilobytes, rounded to 1 decimal place
+      #    (use my_log["KB"] = (my_log["Bytes"] / 1024).round(1)). Nothing to print here.
+      # 5. Print the 3 largest transfers - you will see your new KB column at the end
       #    (use my_log.sort_values("Bytes", ascending=False).head(3))
 
 
@@ -589,23 +606,14 @@ HTTP      7
 DNS       6
 Name: count, dtype: int64
 
-Average bytes per service:
-Service
-DNS        664.2
-HTTP     21888.9
-HTTPS    61450.4
-RDP        140.1
-SSH        828.9
-Name: Bytes, dtype: float64
-
 3 largest transfers:
-    EventID  Hour       SourceIP Service   Action   Bytes
-40      250    17   198.51.100.1   HTTPS  ALLOWED  207360
-7        60     4  198.51.100.32   HTTPS  ALLOWED  127379
-11       82     6   203.0.113.11   HTTPS  ALLOWED  108894
+    EventID  Hour       SourceIP Service   Action   Bytes     KB
+40      250    17   198.51.100.1   HTTPS  ALLOWED  207360  202.5
+7        60     4  198.51.100.32   HTTPS  ALLOWED  127379  124.4
+11       82     6   203.0.113.11   HTTPS  ALLOWED  108894  106.3
 ```
 
-> **Think about it:** Look at the average bytes per service in **your** output. Why are `SSH` and `RDP` so small compared with `HTTPS`? (Hint: look at the `Action` column of those events.)
+> **Think about it:** In **your** output, are the 3 largest transfers `ALLOWED` or `BLOCKED`? Look at the `Bytes` of the blocked events in your first 5 rows: why does a blocked connection transfer almost no data?
 
 <details markdown="1">
 
@@ -958,8 +966,10 @@ SRT111F2026/                   <- your repository, with exactly this name
 - Do **not** rename the repository, and do not put the files in a sub-folder of `Lab07` or at the top level of the repository.
 - Run every script from inside the `Lab07` folder, so the PNG files are created there. Do not rename them.
 - Run `task7.py` again **after** you put in your own student ID, so the pushed `security_charts.png` shows your ID.
+- Part A files (`task1.py` to `task3.py`) are graded in class. You may also push them to `Lab07`; they will not affect your Part B grade.
 - Commit and push the `Lab07` folder to GitHub. Open your repository on github.com in a browser and confirm that all ten files are inside `Lab07` and that the PNG images open.
 - On Blackboard, submit **only the link** to your repository, for example: `https://github.com/yourgithubusername/SRT111F2026`
+- No screenshots and no PDF are required.
 
 ### Part B Grading Checklist
 
@@ -973,7 +983,7 @@ Your repository will be checked against the following list. Your scripts are als
 | 4 | Every script defines the required functions with the required names, has a `main()` function, and calls `main()`. |
 | 5 | Each script runs from the `Lab07` folder without errors and prints the expected output (for Tasks 4 and 7, the expected output for your ID). |
 | 6 | `task4.py` and `task7.py` set `STUDENT_ID` to **your own** 9-digit student ID (the same in both), not the example ID. |
-| 7 | Task 4 uses `head()`, `shape`, a filter on `Action`, `value_counts()`, `groupby()` and `sort_values()`. |
+| 7 | Task 4 uses `head()`, `shape`, a filter on `Action`, `value_counts()`, a new `KB` column and `sort_values()`. |
 | 8 | Task 5 saves `two_lines.png` with the required title, axis labels, line colours, line styles, markers, legend and grid. |
 | 9 | Task 6 saves `bar_chart.png`, `scatter_plot.png` and `histogram.png` with the required titles, axis labels, colours, size, transparency and bins, and has the reflection comment at the bottom. |
 | 10 | Task 7 saves `security_charts.png` with two subplots (a bar chart and a histogram) holding the required titles, labels, colours and figure title with your ID, and has a reflection comment at the bottom about your own charts. |
