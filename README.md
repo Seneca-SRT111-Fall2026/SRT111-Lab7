@@ -6,7 +6,7 @@
 <b>Percentage Towards Final Grade:</b> 2%
 </p>
 
-In Lab 6, you used NumPy arrays to do fast maths on numbers. Real data rarely arrives as a plain grid of numbers, though. It comes as a table: IP addresses next to ports and timestamps, student names next to courses and grades. In the first part of this lab, you will work with **Pandas**, the Python library for tabular data. Pandas is built on top of NumPy and gives you two structures: the **Series** (one labelled column) and the **DataFrame** (a whole table). You will create them, inspect them, and then filter and sort them and add new columns to answer questions about the data.
+In Lab 6, you used NumPy arrays to do fast maths on numbers. Real data rarely arrives as a plain grid of numbers, though. It comes as a table: IP addresses next to services and times, student names next to courses and grades. In the first part of this lab, you will work with **Pandas**, the Python library for tabular data. Pandas is built on top of NumPy and gives you two structures: the **Series** (one labelled column) and the **DataFrame** (a whole table). You will create them, inspect them, and then filter and sort them and add new columns to answer questions about the data.
 
 In the second part, you will act as a **security analyst**. You will load a small **firewall log** from a CSV file, use your **student ID** to pick your own sample of events, and answer a few simple questions about it with Pandas. Then you will use **Matplotlib** to turn numbers into pictures: line plots, scatter plots, bar charts and histograms, and finally a figure with two charts of your own firewall data. Every chart is **saved to a PNG file** with an exact file name, so your work can be checked from your GitHub repository without any screenshots.
 
@@ -29,7 +29,7 @@ By the end of this lab, you should be able to:
 
 - Explain the role of Pandas in data analysis and the difference between a Series and a DataFrame.
 - Create a Series from a list, a NumPy array and a dictionary, and give it a name.
-- Create a DataFrame from a dictionary of lists and read one from a CSV file with `pd.read_csv()`.
+- Create a DataFrame from a dictionary of lists.
 - Inspect data with `head()` and `shape`.
 - Select data by label with `[]` and `loc`, and by position with `iloc`.
 - Filter rows with a condition, sort with `sort_values()`, count with `value_counts()`, and add new columns calculated from existing ones.
@@ -79,6 +79,7 @@ STUDENT_ID = 123456789      # replace with your own 9-digit student ID
 
 - `load_log()` (given) reads the CSV file into a DataFrame. If the file is missing, it prints an error and returns `None`.
 - `select_my_events()` (given) uses `sample()` to pick 50 random rows. The `random_state` number decides **which** rows are picked: the same number always gives the same rows, so your student ID always gives you the same 50 events.
+- Type your ID as a plain number, without quotes. If your ID starts with `0`, leave out the leading zero(s) (Python does not allow a number to start with `0`).
 - **First**, run your task with the example ID `123456789` and compare your output with the expected output in this README. When it matches, your code is correct.
 - **Then** change `123456789` to your own student ID (the same in both files), run the script again, and push that version. Work submitted with the example ID, or with an ID that is not yours, receives **zero** for the task.
 
@@ -612,6 +613,8 @@ Name: count, dtype: int64
 7        60     4  198.51.100.32   HTTPS  ALLOWED  127379  124.4
 11       82     6   203.0.113.11   HTTPS  ALLOWED  108894  106.3
 ```
+
+> **Note:** Services with the same count (here `RDP` and `HTTP`, 7 each) may be listed in either order. That is fine.
 
 > **Think about it:** In **your** output, are the 3 largest transfers `ALLOWED` or `BLOCKED`? Look at the `Bytes` of the blocked events in your first 5 rows: why does a blocked connection transfer almost no data?
 
