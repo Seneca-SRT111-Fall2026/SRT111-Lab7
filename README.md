@@ -1,439 +1,917 @@
-# Lab 7: Pandas, MatplotLib
-**Weight:** 2% <br>
-**Work Type:** Individual <br>
-Environment: GitHub Codespaces
-**Submission Format:** Screenshots
+<h1 align="center">SRT111 Lab 7 - Fall 2026</h1>
 
-----
-## Introduction
+<p align="center">
+<b>Prepared by:</b> Tiayyba Riaz<br>
+<b>Total Marks:</b> 10<br>
+<b>Percentage Towards Final Grade:</b> 2%
+</p>
 
-In this lab, you will work in GitHub Codespaces to create ten Python scripts that explore data manipulation with Pandas and data visualization with Matplotlib. These two libraries are essential tools in data analysis:
+In Lab 6, you used NumPy arrays to do fast maths on numbers. Real data rarely arrives as a plain grid of numbers, though. It comes as a table: IP addresses next to ports and timestamps, student names next to courses and grades. In the first part of this lab, you will work with **Pandas**, the Python library for tabular data. Pandas is built on top of NumPy and gives you two structures: the **Series** (one labelled column) and the **DataFrame** (a whole table). You will create them, inspect them, and then filter, sort and group them to answer questions about the data.
 
-- **Pandas** gives you powerful tools to load, clean, filter, group, summarize, and transform datasets using intuitive structures such as Series and DataFrames. You will practice creating these structures, performing aggregations, extracting insights, and working with real CSV data.
-- **Matplotlib** enables you to communicate those insights visually. You will learn how to create line plots, bar charts, histograms, scatter plots, and subplots, as well as how to customize titles, labels, grids, legends, and styles to improve clarity and impact.
+In the second part, you will act as a **security analyst**. You will load a small **firewall log** from a CSV file, use your **student ID** to pick your own sample of events, and answer a few simple questions about it with Pandas. Then you will use **Matplotlib** to turn numbers into pictures: line plots, scatter plots, bar charts and histograms, and finally a figure with two charts of your own firewall data. Every chart is **saved to a PNG file** with an exact file name, so your work can be checked from your GitHub repository without any screenshots.
 
-By completing this lab, you will gain hands‑on experience working with real‑world data, applying Pandas to analyze it, and using Matplotlib to turn your findings into clear and meaningful visualizations.
+You will continue to use functions and a `main()` function to organize your programs, as practised in Labs 4 to 6.
 
-----
+The lab is divided into two components:
 
-# Lab Objectives
-- Understand the role of Pandas in data analysis and its core structures (Series and DataFrames).
-- Create Pandas Series and DataFrames from lists, dictionaries, NumPy arrays, and CSV files.
-- Perform common operations such as filtering, sorting, grouping, and aggregation.
-- Explore datasets using descriptive statistics, summaries, and DataFrame inspection methods.
-- Add new columns, work with derived data (e.g., decades), and interpret real‑world datasets.
-- Understand the purpose of Matplotlib and its basic plotting functions.
-- Create and customize line plots, scatter plots, bar charts, and histograms.
-- Add visual elements such as titles, labels, legends, grid lines, and styles to improve readability.
-- Use subplots to compare multiple visualizations within a single figure.
-- Apply visualization techniques to explore and communicate insights from real datasets.
+- **Part A: In-Class Lab** (must be completed during the scheduled lab period and demonstrated to the professor for grading).
+- **Part B: Take-Home Lab** (can be completed independently after the scheduled class and is submitted as a link to your GitHub repository).
 
-----
+## Academic Integrity and Use of AI
 
-## Before You Begin
+This lab is intended to assess your individual understanding of Python programming. You may use AI tools (e.g., ChatGPT, Copilot, Gemini) to help explain concepts, syntax, or error messages. However, all submitted code must be your own work, and you must be able to explain your solution if asked by the professor.
 
-Before starting this lab, complete the following steps:
+Submitting copied, shared, or AI-generated solutions as your own work may result in a grade of zero and may be handled according to the College Academic Integrity Policy.
 
-1. Open your GitHub repository and launch GitHub Codespaces.
-2.  Inside the repository, create **ten** Python files:
-   - `task1.py`
-   - `task2.py`
-   - `task3.py`
-   - `task4.py`
-   - `task5.py`
-   - `task6.py`
-   - `task7.py`
-   -  `task8.py`
-   -  `task9.py`
-   -  `task10.py`
+## Lab Objectives
 
-3. At the top of each Python file, include your name and the date in a comment.
-4. Import only the libraries required for each task. Common imports you may need include:
+By the end of this lab, you should be able to:
+
+- Explain the role of Pandas in data analysis and the difference between a Series and a DataFrame.
+- Create a Series from a list, a NumPy array and a dictionary, with a name and index labels.
+- Create a DataFrame from a dictionary of lists and read one from a CSV file with `pd.read_csv()`.
+- Inspect data with `head()`, `tail()`, `shape`, `columns`, `dtypes` and `describe()`.
+- Select data by label with `loc` and `[]`, and by position with `iloc`.
+- Filter rows with Boolean conditions, sort with `sort_values()`, count with `value_counts()`, and summarise groups with `groupby()`.
+- Load a CSV file with `pd.read_csv()` and answer simple questions about your own sample of it.
+- Create line plots, scatter plots, bar charts and histograms with Matplotlib.
+- Add titles, axis labels, legends, grid lines, colours, markers and line styles to a plot.
+- Arrange several plots in one figure with `plt.subplot()` and save every figure with `plt.savefig()`.
+
+## Required Comment Header
+
+For every script created in this lab include the following comment block at the top of the file/cell.
 
 ```python
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+# Author: Your Name
+# Date: YYYY-MM-DD
+# Purpose: Brief description of what the program does.
 ```
 
-----
+## Data Files
 
-# Submission Instructions
-For each task:
-1. Write the script in Codespaces.  
-2. Run the script from the **terminal**.  
-3. Take a screenshot that clearly shows:  
-   - Your **code** in the editor.  
-   - The **terminal output**, including your **username** visible in the terminal.  
-4. Insert the screenshot into a Word document under the heading that matches the task name:  
-   - Example: **Task 1**, **Task 2**, **Task 3**, etc.  
-5. After completing all tasks, convert the Word document to PDF.  Name the PDF file using your `yoursenecausername.pdf`
-6. Submit the PDF file as your final lab submission on Blackbaord.
+| File | Used in | Where it comes from |
+|---|---|---|
+| `security_log.csv` | Tasks 4 and 7 | Download it from Blackboard (Lab 7 starter files) and save it in your `Lab07` folder. |
 
-----
+`security_log.csv` is a small firewall log: 300 connection attempts to a company network, one event per line. It was made up for this course, so the events are not real. It has 6 columns:
 
-## INVESTIGATION 1: CREATING AND USING SERIES AND DATA FRAMES FROM Pandas
-Pandas is a Python library used for data manipulation and analysis. It provides two main data structures:
-- Series – a one-dimensional labeled array, similar to a column in a spreadsheet or a 1D NumPy array with labels.
-- DataFrame – a two-dimensional labeled data structure, like a table with rows and columns.
-Why use Pandas:
-- Easily handle tabular data.
-- Perform filtering, grouping, and aggregation.
-- Combine multiple datasets efficiently.
+| Column | Meaning | Example |
+|---|---|---|
+| `EventID` | Event number, from 1 to 300 | `2` |
+| `Hour` | Hour of the day, from `0` (midnight) to `23` | `0` |
+| `SourceIP` | IP address that tried to connect | `192.0.2.77` |
+| `Service` | What it tried to reach: `HTTPS`, `HTTP`, `DNS`, `SSH` or `RDP` | `SSH` |
+| `Action` | What the firewall did: `ALLOWED` or `BLOCKED` | `BLOCKED` |
+| `Bytes` | Amount of data transferred | `183` |
+
+Do not edit `security_log.csv`.
+
+### Your Own Data: Using Your Student ID
+
+In Tasks 4 and 7, every student works with a **different** sample of 50 events from the log. Your sample is picked using your **9-digit Seneca student ID**, so your numbers and charts will be different from everyone else's.
+
+The code that loads the file and picks your sample is **given to you**. Copy it into `task4.py` and `task7.py` exactly as it is:
+
+```python
+STUDENT_ID = 123456789      # replace with your own 9-digit student ID
+SAMPLE_SIZE = 50
+
+
+# ---------- Provided code: copy as is ----------
+def load_log(filename):
+    try:
+        log = pd.read_csv(filename)
+        print("Loaded", filename, "with", log.shape[0], "events")
+        return log
+    except FileNotFoundError:
+        print("Error: the file", filename, "was not found.")
+        return None
+
+
+def select_my_events(log, student_id, size):
+    my_log = log.sample(n=size, random_state=student_id)
+    my_log = my_log.sort_values("EventID").reset_index(drop=True)
+    print("Student ID:", student_id)
+    print("Events selected:", my_log.shape[0])
+    print()
+    return my_log
+# ---------- End of provided code ----------
+```
+
+- `load_log()` reads the CSV file into a DataFrame. If the file is missing, it prints an error and returns `None`.
+- `select_my_events()` uses `sample()` to pick 50 random rows. The `random_state` number decides **which** rows are picked: the same number always gives the same rows, so your student ID always gives you the same 50 events.
+- **First**, run your task with the example ID `123456789` and compare your output with the expected output in this README. When it matches, your code is correct.
+- **Then** change `123456789` to your own student ID (the same in both files), run the script again, and push that version. Work submitted with the example ID, or with an ID that is not yours, receives **zero** for the task.
+
+## Installing Pandas and Matplotlib
+
+In the VS Code terminal (or a Jupyter Lab terminal), run:
+
+```text
+python -m pip install pandas matplotlib
+```
+
+On a Mac, use `python3` instead of `python` if `python` is not found. NumPy is installed automatically with Pandas.
+
+> **Note:** The expected outputs were produced with Pandas 3. If you have Pandas 2, text columns are shown as `object` instead of `str` (for example `dtype: object`). That is fine.
+
+---
+
+## Part A - In-Class Lab [30% of Lab Marks]
+
+Complete all assigned in-class tasks during your scheduled lab.
+
+**Part A Marking (3 marks):**
+
+| Task | Marks |
+|---|---|
+| Task 1 - Creating and Exploring Pandas Series | 1.0 |
+| Task 2 - Creating and Exploring a DataFrame | 1.0 |
+| Task 3 - Filtering, Sorting and Grouping a DataFrame | 1.0 |
+| **Total** | **3** |
+
+- This part can be completed in Jupyter Lab or VS Code. You have a choice. I recommend using Jupyter Lab.
+  - If you are using Jupyter Lab, then please create a single notebook file called `Lab7.ipynb` and complete each task in a unique cell.
+  - If you are using VS Code, then just follow the instructions for each task and create `.py` files.
+- Demonstrate your completed work to the professor before leaving the lab.
+- The professor may ask you to explain portions of your code.
+- No submission is required for Part A unless otherwise instructed.
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Pandas Series</b></summary>
+
+<br>
+
+**Import Pandas once, at the top of the script.** By convention it is given the short name `pd`:
+
+```python
+import pandas as pd
+import numpy as np      # only needed if you create arrays
+```
+
+A **Series** is a one-dimensional array of values where every value has a **label** (its index). A Series can also have a **name**, like a column heading.
+
+| Code | What it creates |
+|---|---|
+| `pd.Series([10, 20, 30], name="Scores")` | From a list. The labels are `0, 1, 2`. |
+| `pd.Series(np.array([1, 2, 3]))` | From a NumPy array. |
+| `pd.Series({"Ann": 20, "Ben": 22})` | From a dictionary. The **keys** become the labels. |
+| `pd.Series(["x", "y"], index=["a", "b"])` | With your own labels. |
+
+**Accessing values**
+
+| Code | Meaning |
+|---|---|
+| `s["Ann"]` | The value with the **label** `"Ann"` |
+| `s.iloc[0]` | The value at **position** 0 (the first value) |
+| `s.iloc[-1]` | The value at the last position |
+| `s * 2` | A new Series with every value doubled (vectorized, like NumPy) |
+| `s.tolist()` | The values as a plain Python list |
+
+When you `print()` a Series, Pandas shows the labels on the left, the values on the right, and a last line with the name and the data type, such as `Name: Scores, dtype: int64`.
+
+</details>
 
 ### Task 1 - Creating and Exploring Pandas Series
-**Objective:** Learn how to create Pandas Series with values, index labels, and a name, and practice accessing elements using both label-based and position-based indexing
 
-A Pandas Series is a one‑dimensional labeled array. Each value has an index, and a Series can also have a descriptive name (like a column title). You can create Series from lists, NumPy arrays, or dictionaries.
-
-Look at the example given below:
-```Python
-import pandas as pd
-import numpy as np
-
-# Series from a list
-series_list = pd.Series([10, 20, 30, 40], name="Scores")
-print("Series from list:\n", series_list)
-
-# Series from a NumPy array
-arr = np.array([1, 2, 3, 4])
-series_array = pd.Series(arr)
-print("\nSeries from NumPy array:\n", series_array)
-```
+**Objective:** Practice creating Series from a list, a NumPy array and a dictionary, giving them names and index labels, and accessing values by label and by position.
 
 **Instructions:**
-- In `task1.py`, create a numeric series from a Python list: [5, 10, 15, 20] and name it `Numbers`.
-- Create a numeric series from a NumPy array [2, 4, 6, 8] and name it `Evens`.
-- Create a numeric series from a dictionary: {'Alice': 25, 'Bob': 30, 'Charlie': 35} and name it `Ages`.
-- Create a string Series for grades and name it `Grades`:
-   - Values: ["<50", "50-59", "60-69", "70-79", "80-89", "90-100"]
-   - Index labels: ["F", "D", "C", "B", "A", "A+"]
-- Print all Series.
-- **Access and print specific data**
-   - Print the first and last elements of `Numbers` and `Evens`. (use `.iloc[0]` and `.iloc[-1]`)
-   - Print the value for "Bob" from `Ages` (use label-based indexing `Ages["Bob"]`)
-   - Print the values for indices "C" and "A+" from `Grades`.
-   - Print the value "60-69" by using positional indexing, not by typing the value directly.
-- Run your script with the command: `python ./task1.py` and verify the output.
 
----
+- Create a file named `task1.py` and add the required comment header. Import NumPy as `np` and Pandas as `pd`.
+- Write a function named `print_series` that takes two parameters, a text `label` and a Series `series`, and prints the label, the Series, and an empty line.
+- Write a function named `create_series` that:
+  - Creates a Series named `Numbers` from the list `[5, 10, 15, 20]`.
+  - Creates a Series named `Evens` from the NumPy array `np.array([2, 4, 6, 8])`.
+  - Creates a Series named `Ages` from the dictionary `{"Alice": 25, "Bob": 30, "Charlie": 35}`.
+  - Creates a Series named `Grades` with the values `"<50", "50-59", "60-69", "70-79", "80-89", "90-100"` and the index labels `"F", "D", "C", "B", "A", "A+"`.
+  - Calls `print_series()` for each Series, using the labels shown in the expected output.
+  - Returns the four Series (`return numbers, evens, ages, grades`).
+- Write a function named `access_values` that takes the four Series as parameters and prints, with the labels shown in the expected output:
+  - The first and last value of `Numbers` and of `Evens`, using `.iloc[0]` and `.iloc[-1]`.
+  - The age of Bob, using the label `"Bob"`.
+  - The grade ranges for the labels `"C"` and `"A+"`.
+  - The third grade range, using **position** `2` with `.iloc`. Do not type the value `"60-69"` yourself.
+  - `Numbers` multiplied by 2, converted to a list with `.tolist()`.
+- Write a `main()` function that calls `create_series()`, stores the four returned Series, and passes them to `access_values()`.
+- Add a call to the `main()` function.
+- Run your script with `python task1.py` and verify the output.
 
-### Task 2 - Introduction to Pandas DataFrames
-**Objective:** Learn how to create a Pandas DataFrame, explore its columns and rows, view its attributes, and access elements using label‑based and position‑based selection.
+**Expected Output:**
 
-A DataFrame is a two‑dimensional labeled data structure similar to a spreadsheet or a table. Each column is a Pandas Series, and a DataFrame can store mixed data types—numeric, string, categorical, etc.
-You can create DataFrames from dictionaries, lists of dictionaries, lists of lists, NumPy arrays, or external files such as CSVs.
+```text
+Numbers (from a list):
+0     5
+1    10
+2    15
+3    20
+Name: Numbers, dtype: int64
 
-Below is an example of creating a dataframe from the dictionary of lists:
-```Python
-import pandas as pd
+Evens (from a NumPy array):
+0    2
+1    4
+2    6
+3    8
+Name: Evens, dtype: int64
 
-# Create a DataFrame from a dictionary that contains student course enrollment data
-data = {
-    "Student": ["Amira", "David", "Sofia", "Jamal"],
-    "Program": ["Computer Science", "Business", "Engineering", "Psychology"],
-    "Year": [1, 2, 3, 4],
-    "GPA": [3.6, 3.2, 3.9, 3.4]
-}
+Ages (from a dictionary):
+Alice      25
+Bob        30
+Charlie    35
+Name: Ages, dtype: int64
 
-df = pd.DataFrame(data)
-print("DataFrame:\n", df)
+Grades (with index labels):
+F        <50
+D      50-59
+C      60-69
+B      70-79
+A      80-89
+A+    90-100
+Name: Grades, dtype: str
 
-# Access a column
-print("\nColumn 'GPA':\n", df["GPA"])
-
-# Access the first row
-print("\nFirst row:\n", df.iloc[0])
-```
-**Instructions:**
-- In task2.py Create a DataFrame with the following information about library books. You need build the data structure first using python dictionary, and then convert the dictionary to a DataFrame.
-  
-| Title                              | Author              | Year | Pages | Genre        |
-|------------------------------------|---------------------|------|-------|--------------|
-| "The Great Gatsby"                 | F. Scott Fitzgerald | 1925 | 180   | Fiction      |
-| "A Brief History of Time"          | Stephen Hawking     | 1988 | 212   | Science      |
-| "To Kill a Mockingbird"            | Harper Lee          | 1960 | 281   | Fiction      |
-| "The Art of Computer Programming"  | Donald Knuth        | 1968 | 672   | Computer Sci |
-| "Sapiens: A Brief History of Humankind" | Yuval Noah Harari | 2011 | 498   | History      |
-
-- Print the entire DataFrame.
-- **Perform the following operations:**
-   - Print the `"Title"` column.  
-   - Print the `"Author"` column.  
-   - Print the first 3 rows using `.head(3)`.  
-   - Print the number of rows and columns using `.shape`.  
-   - Print the data type of each column using `.dtypes`.
-- Run your script with the command: `python ./task2.py` and verify the output.
-
----
-
-### Task 3 - Exploring and Analyzing a DataFrame
-**Objective:** Practice inspecting, filtering, summarizing, and sorting data in a Pandas DataFrame. This task introduces basic analysis techniques used in real‑world data workflows.
-
-**Instructions:**
-- Copy the following code task3.py. This code create a DataFrame of student grades.
-```Python
-data = {
-    "Name": ["Amira", "David", "Sofia", "Liam", "Noah"],
-    "Course": ["Math", "Math", "Science", "History", "Science"],
-    "Grade": [85, 92, 78, 88, 95],
-    "Year": [1, 2, 1, 3, 2]
-}
-
-df = pd.DataFrame(data)
-print("DataFrame:\n", df)
-```
-- Perform the following analyses
-   - Print the first 3 rows. Use `.head(3)` to preview the beginning of the dataset.
-   - Use .describe() to view mean, min, max, etc.
-   - Use boolean filtering on the Grade column to find all students with grades above 90.
-   - Filter rows where Course == "Science" and select only the "Name" column.
-   - Sort the DataFrame by Grade in descending order. Use `.sort_values()` with `ascending=False`.
-- Run your script with the command: `python ./task3.py` and verify the output.
-
----
-
-### Task 4 - Analyzing Real-World Movie Data
-**Objective:** Practice reading CSV files, exploring DataFrame structure, filtering, summarizing data, grouping values, and performing basic visual analysis with Pandas.
-
-CSV (Comma-Separated Values) files are widely used for storing tabular data. Pandas provides simple functions to read from and write to CSV files. In this task, you will work with a **real-world dataset**: the IMDB Top 250 movies. You will practice reading data from a CSV file, exploring it, performing aggregations, and visualizing results using Pandas and Matplotlib.
-
-To read a CSV file into a DataFrame, you can use the `pd.read_csv` function.
-```Python
-# Reading data from a CSV file
-df_from_csv = pd.read_csv('sample.csv')  # Replace 'sample.csv' with your file path
-print("\nDataFrame from CSV:\n", df_from_csv)
+=== Accessing values ===
+First and last of Numbers: 5 20
+First and last of Evens: 2 8
+Age of Bob: 30
+Grade C range: 60-69
+Grade A+ range: 90-100
+Third grade range (position 2): 60-69
+Numbers doubled: [10, 20, 30, 40]
 ```
 
-**Instructions:**
-- Copy the following code in task4.py to read the dataset from the raw CSV link.
-  ```python
-  url = "https://raw.githubusercontent.com/itiievskyi/IMDB-Top-250/master/imdb_top_250.csv"
-  df = pd.read_csv(url)
-  ```
--  **Explore the DataFrame**:  
-   - print `df.info()` — data types, non‑null counts.
-   - print `df.describe()` — summary statistics for numeric columns
-   - Print the first 10 and last 10 rows.
-- **Basic analysis**:  
-   - Find the **earliest** and **latest** movie year (hint: `min()` and `max()` on the year column).  
-   - Print **unique values** in the `"Genre"` column.  Use `df["Genre"].unique()` 
-   - Count how many movies are not from the USA.
-     ```python
-     non_usa_df = df[df["Country"] != "USA"]
-     non_usa_count = non_usa_df.shape[0]
-     ```
-- **Top-rated movies**: Find the top 10 highest-rated movies by the rating column. Use `.sort_values()`.
-- Run your script with the command: `python ./task4.py` and verify the output.
-----
-## INVESTIGATION 2: BASIC PLOTS AND CUSTOMIZATION
+> **Think about it:** `Ages["Bob"]` and `Ages.iloc[1]` both give `30`. What is the difference between the two, and which one would still give Bob's age if the Series were sorted by age in descending order?
 
-### Task 5 - Your First Line Plot
-**Objective:** Learn how to create a simple line plot using Matplotlib and add essential visual elements such as a title, axis labels, and a displayed figure.
+<details markdown="1">
 
-A line plot is useful for showing trends, patterns, or changes over a sequence of values.
+<summary><b>Quick Reference: Pandas DataFrames</b></summary>
 
-**Instructions:**
-- Add the following code in the file `task5.py`. This defines the x‑values and corresponding y‑values you will plot.
-```Python
-import matplotlib.pyplot as plt
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
-```
-- Plot `y` versus `x` using `plt.plot()`.
-  ```python
-  plt.plot(x, y)
-  ```
-- Provide meaningful axis labels and a descriptive title:
-   - Use `plt.xlabel('Your X label')` and `plt.ylabel('Your Y label')` for axes labels.
-   - Use `plt.title('Your Title')` to add a title.
-- Display the plot using `plt.show()`.
-- Run the script using the command: `python ./task5.py` and verify the output.
----
+<br>
 
-### Task 6- Plotting Multiple Lines
-**Objective:** Learn how to plot multiple lines on the same graph, customize their appearance (color, style), and add a legend and grid to improve readability.
+A **DataFrame** is a table: rows and named columns. Each column is a Series. The usual way to build one is from a **dictionary of lists**, where each key is a column name and each list holds that column's values (all lists must be the same length):
 
-Plotting multiple lines allows you to compare datasets visually on the same axes.
-
-**Instructions:**
-- Add the following code in the file `task6.py`.  Note that we have two lists of `y` values as shown below. We will plot both of them in separate colors.
-
-```Python
-import matplotlib.pyplot as plt
-x = [1, 2, 3, 4, 5]
-y1 = [2, 4, 6, 8, 10]   # first line
-y2 = [1, 4, 9, 16, 25]  # second line
-```
-- Plot both lines on the same figure:
-```Python
-plt.plot(x, y1, color='blue', linestyle='-', label='y = 2x')
-plt.plot(x, y2, color='red', linestyle='--', label='y = x^2')
-```
-- Add a **title**, **x-axis label**, and **y-axis label**.
-- Add a **legend** to distinguish the lines.
-- Add **grid lines** for better readability. Use `plt.grid(True)` to show grid lines.
-- Display the plot using `plt.show()`.
-- Run the script using the command: `python ./task6.py` and verify the output.
-  
----
-
-### Task 7- Scatter Plots
-**Objective:** Learn how to create a scatter plot using Matplotlib and customize point color, size, and transparency.
-
-Scatter plots are useful for visualizing relationships or patterns between two numerical variables.
-
-**Instructions:**
-- Add the following code in the file `task7.py`
-- Import Matplotlib and create two lists representing data points:
-```Python
-import matplotlib.pyplot as plt
-x = [5, 7, 8, 7, 6, 9, 5, 6]
-y = [99, 86, 87, 88, 100, 86, 103, 87]
-```
-- Create a scatter plot using plt.scatter().
-- Customize the points:
-   - Change color (e.g., c='green')
-   - Change size (e.g., s=100)
-   - Adjust transparency (e.g., alpha=0.6)
-   - **Hint:** Use plt.scatter(x, y, c='color', s=size, alpha=transparency) to customize points. 
-- Add a **title**, **x-axis label**, and **y-axis label**.
-- Display the plot using plt.show().
-- Run the script using the command: `python ./task7.py` and verify the output.
-
----
-
-### Task 8 - Bar Charts and Histograms
-**Objective:** Learn how to create bar charts and histograms, and understand their differences and uses.
-
-- A **bar chart** compares quantities across categories.
-- A **histogram** shows how often numerical values fall within specific ranges (bins).
-These plots help visualize categorical and frequency-based data effectively.
-
-**Instructions:**
-- Add the following code in the file `task8.py`
-
-```Python
-import matplotlib.pyplot as plt
-products = ['Coffee', 'Tea', 'Juice', 'Soda']
-sales = [150, 120, 90, 60]
-```
-- Create a bar chart showing sales per product
 ```python
-plt.figure()  # Create a new figure
-plt.bar(products, sales)
-plt.xlabel("Product")
-plt.ylabel("Sales (Units)")
-plt.title("Product Sales Comparison")
-plt.show()
+data = {
+    "Student": ["Amira", "David", "Sofia"],
+    "GPA": [3.6, 3.2, 3.9],
+}
+df = pd.DataFrame(data)
 ```
-- The bar chart compares sales across four categories.
-- Next, create a list of daily sales values:
-```Python
-daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]
-```
-- Create a histogram showing the distribution of daily sales.
+
+**Inspecting a DataFrame**
+
+| Code | Result |
+|---|---|
+| `df.head(3)` / `df.tail(3)` | The first / last 3 rows |
+| `df.shape` | `(rows, columns)` as a tuple, an attribute (no brackets) |
+| `df.columns.tolist()` | The column names as a list |
+| `df.dtypes` | The data type of each column |
+
+**Selecting data**
+
+| Code | Result |
+|---|---|
+| `df["GPA"]` | One column, as a Series |
+| `df[["Student", "GPA"]]` | Several columns (note the **double** brackets), as a DataFrame |
+| `df.iloc[1]` | The row at **position** 1, as a Series |
+| `df.loc[1, "Student"]` | The value in the row with **label** 1 and the column `"Student"` |
+
+**Wide tables.** Pandas hides middle columns with `...` when a table is wider than 80 characters. Add these two lines after the import to show the whole table:
+
 ```python
-plt.figure()  # Start a new figure for the histogram
-plt.hist(daily_sales, bins=5)  # You can change the number of bins
-plt.xlabel("Daily Sales")
-plt.ylabel("Frequency")
-plt.title("Distribution of Daily Sales")
-plt.show()
+pd.set_option("display.width", 120)
+pd.set_option("display.max_columns", None)
 ```
-- bins=5 groups the numbers into 5 ranges.
-- Try changing it to bins=3 or bins=8 to see how it affects the shape of the graph.
-- Run the script using the command: `python ./task8.py` and verify the output.
-  
-- **Questions for Reflection:**
-   - Why is a bar chart appropriate for the product sales data?
-   - Why is a histogram appropriate for daily sales?
-   - How does changing the number of bins in the histogram affect the visualization?
-   - What could you add to improve readability or interpretability of these plots?
 
-## INVESTIGATION 3: ADVANCED VISUALIZATION AND REAL WORLD DATA 
+</details>
 
-### Task 9 - Subplots
-**Objective:** Learn how to display multiple plots in a single figure using Matplotlib’s subplot() function. Subplots allow you to compare different datasets side‑by‑side in a single window.
-Sometimes, you want to **display multiple plots in a single figure** for easy comparison.  
-Matplotlib’s **subplots** allow you to arrange multiple plots in rows and columns within the same figure.
-For example: A **2×2 subplot layout** means:
-- 2 rows
-- 2 columns
-- 4 total plots  
-- Each subplot is selected by its index:
-  - 1 → top-left  
-  - 2 → top-right  
-  - 3 → bottom-left  
-  - 4 → bottom-right  
+### Task 2 - Creating and Exploring a DataFrame
+
+**Objective:** Practice building a DataFrame from a dictionary, exploring its columns, rows and attributes, and selecting values by position and by label.
 
 **Instructions:**
-- Add the following code in the file `task9.py`
-```Python
+
+- Create a file named `task2.py` and add the required comment header. Import Pandas as `pd` and add the two `pd.set_option(...)` lines from the Quick Reference.
+- Write a function named `build_books` that builds a **dictionary of lists** holding the library books below, converts it to a DataFrame with `pd.DataFrame()`, and returns the DataFrame.
+
+  | Title | Author | Year | Pages | Genre |
+  |---|---|---|---|---|
+  | The Great Gatsby | F. Scott Fitzgerald | 1925 | 180 | Fiction |
+  | A Brief History of Time | Stephen Hawking | 1988 | 212 | Science |
+  | To Kill a Mockingbird | Harper Lee | 1960 | 281 | Fiction |
+  | The Art of Computer Programming | Donald Knuth | 1968 | 672 | Computer Sci |
+  | Sapiens: A Brief History of Humankind | Yuval Noah Harari | 2011 | 498 | History |
+
+- Write a function named `explore_books` that takes the DataFrame as a parameter and prints, with the labels shown in the expected output (and an empty line after each table):
+  - The whole DataFrame.
+  - The `Title` column.
+  - The `Title` and `Author` columns together.
+  - The first 3 rows, using `head()`.
+  - The shape, then the number of rows and columns taken from the shape, then the column names as a list.
+  - The data type of each column, using `dtypes`.
+- Write a function named `select_values` that takes the DataFrame as a parameter and prints:
+  - `=== Selecting rows and values ===`
+  - The row at position 1, using `iloc`, followed by an empty line.
+  - The number of pages of the book at position 3, using `iloc`.
+  - The author of the book with index label 2, using `loc`.
+- Write a `main()` function that calls `build_books()` and passes the result to `explore_books()` and `select_values()`.
+- Add a call to the `main()` function.
+- Run your script with `python task2.py` and verify the output.
+
+**Expected Output:**
+
+```text
+All books:
+                                   Title               Author  Year  Pages         Genre
+0                       The Great Gatsby  F. Scott Fitzgerald  1925    180       Fiction
+1                A Brief History of Time      Stephen Hawking  1988    212       Science
+2                  To Kill a Mockingbird           Harper Lee  1960    281       Fiction
+3        The Art of Computer Programming         Donald Knuth  1968    672  Computer Sci
+4  Sapiens: A Brief History of Humankind    Yuval Noah Harari  2011    498       History
+
+Title column:
+0                         The Great Gatsby
+1                  A Brief History of Time
+2                    To Kill a Mockingbird
+3          The Art of Computer Programming
+4    Sapiens: A Brief History of Humankind
+Name: Title, dtype: str
+
+Title and Author columns:
+                                   Title               Author
+0                       The Great Gatsby  F. Scott Fitzgerald
+1                A Brief History of Time      Stephen Hawking
+2                  To Kill a Mockingbird           Harper Lee
+3        The Art of Computer Programming         Donald Knuth
+4  Sapiens: A Brief History of Humankind    Yuval Noah Harari
+
+First 3 rows:
+                     Title               Author  Year  Pages    Genre
+0         The Great Gatsby  F. Scott Fitzgerald  1925    180  Fiction
+1  A Brief History of Time      Stephen Hawking  1988    212  Science
+2    To Kill a Mockingbird           Harper Lee  1960    281  Fiction
+
+Shape: (5, 5)
+Rows: 5 | Columns: 5
+Column names: ['Title', 'Author', 'Year', 'Pages', 'Genre']
+
+Data types:
+Title       str
+Author      str
+Year      int64
+Pages     int64
+Genre       str
+dtype: object
+
+=== Selecting rows and values ===
+Row at position 1 (iloc):
+Title     A Brief History of Time
+Author            Stephen Hawking
+Year                         1988
+Pages                         212
+Genre                     Science
+Name: 1, dtype: object
+
+Pages of the book at position 3 (iloc): 672
+Author of the book with index label 2 (loc): Harper Lee
+```
+
+> **Note:** The data types tell you that `Year` and `Pages` are whole numbers (`int64`) and the other columns are text (`str`). A whole row printed on its own has the type `object` because it mixes text and numbers.
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Filtering, Sorting and Grouping</b></summary>
+
+<br>
+
+**Summary statistics.** `df.describe()` gives the count, mean, standard deviation, minimum, quartiles and maximum of every numeric column.
+
+**Filtering with a Boolean condition** works like Boolean indexing in NumPy. The condition gives one `True`/`False` per row, and the square brackets keep only the `True` rows:
+
+```python
+df[df["GPA"] > 3.5]                        # rows where GPA is above 3.5
+df[df["Program"] == "Business"]["Student"]  # filter, then keep one column
+```
+
+**Sorting**
+
+```python
+df.sort_values("GPA")                      # lowest first
+df.sort_values("GPA", ascending=False)     # highest first
+```
+
+Sorting does not change `df`. It returns a new, sorted DataFrame. The original index labels move with their rows.
+
+**Grouping.** `groupby()` splits the rows into groups that share a value, then summarises each group:
+
+```python
+df.groupby("Program")["GPA"].mean()        # average GPA for each program
+```
+
+The result is a Series whose labels are the group names, sorted alphabetically.
+
+</details>
+
+### Task 3 - Filtering, Sorting and Grouping a DataFrame
+
+**Objective:** Practice summarising a DataFrame with `describe()`, filtering rows with conditions, sorting, and grouping.
+
+**Instructions:**
+
+- Create a file named `task3.py` and add the required comment header. Import Pandas as `pd`.
+- Write a function named `build_grades` that returns a DataFrame created from this dictionary:
+
+  ```python
+  data = {
+      "Name": ["Amira", "David", "Sofia", "Liam", "Noah", "Maya"],
+      "Course": ["Math", "Math", "Science", "History", "Science", "History"],
+      "Grade": [85, 92, 78, 88, 95, 71],
+      "Year": [1, 2, 1, 3, 2, 1],
+  }
+  ```
+
+- Write a function named `analyse_grades` that takes the DataFrame as a parameter and prints, with the labels shown in the expected output (and an empty line after each result):
+  - The whole DataFrame.
+  - The summary statistics, using `describe()`.
+  - The students with a grade above 90, using a Boolean condition on the `Grade` column.
+  - Only the **names** of the students in the `Science` course.
+  - The DataFrame sorted by grade from highest to lowest, using `sort_values()` with `ascending=False`.
+  - The average grade for each course, using `groupby()`.
+- Write a `main()` function that calls `build_grades()` and passes the result to `analyse_grades()`.
+- Add a call to the `main()` function.
+- Run your script with `python task3.py` and verify the output.
+
+**Expected Output:**
+
+```text
+Student grades:
+    Name   Course  Grade  Year
+0  Amira     Math     85     1
+1  David     Math     92     2
+2  Sofia  Science     78     1
+3   Liam  History     88     3
+4   Noah  Science     95     2
+5   Maya  History     71     1
+
+Summary statistics:
+           Grade      Year
+count   6.000000  6.000000
+mean   84.833333  1.666667
+std     8.975894  0.816497
+min    71.000000  1.000000
+25%    79.750000  1.000000
+50%    86.500000  1.500000
+75%    91.000000  2.000000
+max    95.000000  3.000000
+
+Grades above 90:
+    Name   Course  Grade  Year
+1  David     Math     92     2
+4   Noah  Science     95     2
+
+Names of Science students:
+2    Sofia
+4     Noah
+Name: Name, dtype: str
+
+Sorted by grade (highest first):
+    Name   Course  Grade  Year
+4   Noah  Science     95     2
+1  David     Math     92     2
+3   Liam  History     88     3
+0  Amira     Math     85     1
+2  Sofia  Science     78     1
+5   Maya  History     71     1
+
+Average grade per course:
+Course
+History    79.5
+Math       88.5
+Science    86.5
+Name: Grade, dtype: float64
+```
+
+> **Think about it:** In the sorted table, the index labels on the left are no longer `0, 1, 2, ...`. Why did Pandas keep the original labels, and how could they help you find a row in the original table?
+
+---
+
+## Part B - Take-Home Lab [70% of Lab Marks]
+
+Complete the following tasks independently after the scheduled lab using VS Code.
+
+**Part B Marking (7 marks):**
+
+| Task | Marks |
+|---|---|
+| Task 4 - Analysing a Firewall Log with Pandas | 1.5 |
+| Task 5 - Line Plots | 1.5 |
+| Task 6 - Scatter Plots, Bar Charts and Histograms | 2.0 |
+| Task 7 - Firewall Charts with Subplots | 2.0 |
+| Submission requirements (exact repo, folder and file names, comment headers, generated files, code pushed to GitHub) | up to 100% deduction may apply |
+| **Total** | **7** |
+
+> Marks are awarded only when the required functions and methods are used as instructed. Correct output alone is not enough. Your charts are checked by the **file name**, **titles**, **axis labels**, **legend**, **colours** and **data** they contain, so use the exact text given in each task.
+
+**Before You Begin:**
+
+- Open your local Git repository `SRT111F2026` on your computer.
+- Create a new folder named `Lab07` inside the repository (capital `L`, then a zero: `Lab07`).
+- Download `security_log.csv` from Blackboard and save it in the `Lab07` folder.
+- Open the `Lab07` folder in VS Code.
+- Create all Part B files inside the `Lab07` folder. Use these names **exactly**, all in lower case: `task4.py`, `task5.py`, `task6.py`, `task7.py`.
+- Make sure Pandas and Matplotlib are installed (see [Installing Pandas and Matplotlib](#installing-pandas-and-matplotlib)).
+
+**For each task:**
+
+- Run the script from the `Lab07` folder using the VS Code terminal and compare your output with the expected output.
+- Your scripts **create PNG images** in the `Lab07` folder. Open each PNG in VS Code to check it, then commit and push it with your code.
+- Some tasks ask you to answer a question in a **comment** at the bottom of your script. These answers are marked, so do not skip them.
+- No screenshots or PDF are required for this lab. Your code and the files it creates in GitHub are your submission.
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Reading a CSV File and Answering Questions</b></summary>
+
+<br>
+
+**Reading a CSV file.** A CSV (Comma-Separated Values) file is a table saved as text: the first line holds the column names, and each following line is one row. `pd.read_csv("security_log.csv")` turns it into a DataFrame. (This is done for you in `load_log()`.)
+
+**Answering questions about a DataFrame `df`** (you already used most of these in Part A):
+
+| Question | Code |
+|---|---|
+| What do the first rows look like? | `df.head(5)` |
+| How many rows and columns? | `df.shape` |
+| Which rows match a condition? | `df[df["Action"] == "BLOCKED"]` |
+| How many rows match? | `df[df["Action"] == "BLOCKED"].shape[0]` |
+| How many times does each value appear? | `df["Service"].value_counts()` |
+| What is the average for each group? | `df.groupby("Service")["Bytes"].mean()` |
+| Which rows have the largest values? | `df.sort_values("Bytes", ascending=False).head(3)` |
+
+`value_counts()` lists the most common value first. `.round(1)` rounds the results to 1 decimal place.
+
+</details>
+
+### Task 4 - Analysing a Firewall Log with Pandas
+
+**Objective:** Practice reading a CSV file and answering simple questions about your own sample of data with `head()`, `shape`, filtering, `value_counts()`, `groupby()` and `sort_values()`.
+
+**Instructions:**
+
+- Make sure `security_log.csv` is in your `Lab07` folder.
+- Create the file `task4.py`, add the required comment header, and import Pandas as `pd`.
+- Below the import, copy the **provided code** from [Your Own Data](#your-own-data-using-your-student-id).
+- Write a function named `analyse_events` that takes your sample, `my_log`, as a parameter and prints, with the labels shown in the expected output:
+  - The first 5 events, using `head()`, followed by an empty line.
+  - The number of rows and columns, using `shape`.
+  - The number of blocked events (rows where `Action` is `"BLOCKED"`), followed by an empty line.
+  - The number of events per service, using `value_counts()`, followed by an empty line.
+  - The average number of bytes per service, using `groupby()` and rounded to 1 decimal place, followed by an empty line.
+  - The 3 largest transfers, using `sort_values()` on `Bytes` from largest to smallest and `head(3)`.
+- Write a `main()` function that:
+  - Calls `load_log("security_log.csv")` and stores the result in `log`. If `log` is `None`, the function stops (`return`).
+  - Calls `select_my_events(log, STUDENT_ID, SAMPLE_SIZE)` and stores the result in `my_log`.
+  - Calls `analyse_events(my_log)`.
+- Add a call to the `main()` function.
+- Run your script with `python task4.py` and compare the output with the expected output below. Then change `STUDENT_ID` to your own ID and run it again.
+
+**Expected Output (with the example ID `123456789`):**
+
+```text
+Loaded security_log.csv with 300 events
+Student ID: 123456789
+Events selected: 50
+
+First 5 events:
+   EventID  Hour       SourceIP Service   Action  Bytes
+0        3     0  198.51.100.11     RDP  BLOCKED    120
+1        6     0   203.0.113.38     SSH  ALLOWED   4381
+2       23     1   203.0.113.33     RDP  BLOCKED    153
+3       36     2   203.0.113.25     RDP  BLOCKED     99
+4       50     3      10.0.0.24     SSH  BLOCKED    176
+
+Rows and columns: (50, 6)
+Blocked events: 16
+
+Events per service:
+Service
+HTTPS    21
+SSH       9
+RDP       7
+HTTP      7
+DNS       6
+Name: count, dtype: int64
+
+Average bytes per service:
+Service
+DNS        664.2
+HTTP     21888.9
+HTTPS    61450.4
+RDP        140.1
+SSH        828.9
+Name: Bytes, dtype: float64
+
+3 largest transfers:
+    EventID  Hour       SourceIP Service   Action   Bytes
+40      250    17   198.51.100.1   HTTPS  ALLOWED  207360
+7        60     4  198.51.100.32   HTTPS  ALLOWED  127379
+11       82     6   203.0.113.11   HTTPS  ALLOWED  108894
+```
+
+> **Think about it:** Look at the average bytes per service in **your** output. Why are `SSH` and `RDP` so small compared with `HTTPS`? (Hint: look at the `Action` column of those events.)
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Matplotlib Basics and Saving a Plot</b></summary>
+
+<br>
+
+**Import the plotting module once, at the top of the script.** By convention it is given the short name `plt`:
+
+```python
 import matplotlib.pyplot as plt
-x = [1, 2, 3, 4, 5]
-y1 = [2, 4, 6, 8, 10]
-y2 = [1, 3, 5, 7, 9]
-y3 = [5, 3, 6, 2, 7]
-y4 = [10, 8, 6, 4, 2]
 ```
-- Create a 2×2 grid of subplots: (the first plot is done for you, extend the idea to complete the remaining 3 plots)
-   - Top-left: Line plot of y1 vs x
-     ```python
-     plt.subplot(2, 2, 1) # The first 2 = number of rows, the second 2 = number of columns,
-     #the third 1 = index of this subplot (top-left).
-     plt.plot(x, y1)
-     plt.title("Plot 1: y1 vs x")
-     ```
-   - Top-right: Line plot of y2 vs x 
-   - Bottom-left: Line plot of y3 vs x
-   - Bottom-right: Line plot of y4 vs x
-- Adjust spacing so that titles and labels do not overlap (hint: `plt.tight_layout()`).
-- Run the script using the command: `python ./lab7e.py` and verify the output.
-  
-- **Questions for Reflection:**
-   - How does using subplots help compare multiple datasets?
-   - Could you combine different types of plots (line, scatter, bar) in the same figure? How?
-     
----
 
-### Task 10 - Plotting Real-World Data from CSV
-**Objective:** Read a real-world dataset using Pandas, analyze the data, and create multiple visualizations (line, bar, and histogram) using Matplotlib. You will work with the IMDB Top 250 Movies dataset.
+**The steps for every chart in this lab**
+
+```python
+plt.figure()                  # 1. start a new, empty figure
+plt.plot(x, y)                # 2. draw the data
+plt.title("My Title")         # 3. add a title and axis labels
+plt.xlabel("X label")
+plt.ylabel("Y label")
+plt.savefig("my_plot.png")    # 4. save the figure to a PNG file in the current folder
+plt.close()                   # 5. close the figure, so the next chart starts clean
+```
+
+- In this lab you **save** every chart with `plt.savefig()` instead of showing it with `plt.show()`. The file is your proof that the chart works, and it is checked from GitHub. Open the PNG in VS Code to look at it.
+- Call `plt.savefig()` **before** `plt.close()`. Saving a closed figure gives an empty image.
+- Forgetting `plt.figure()` or `plt.close()` makes the next chart draw on top of the previous one.
+
+**Customizing lines**
+
+```python
+plt.plot(x, y, color="blue", linestyle="-", marker="o", label="Series A")
+```
+
+| Argument | Examples | Meaning |
+|---|---|---|
+| `color` | `"blue"`, `"red"`, `"green"` | Line colour |
+| `linestyle` | `"-"` solid, `"--"` dashed, `":"` dotted | Line style |
+| `marker` | `"o"` circle, `"s"` square, `"^"` triangle | Symbol drawn at each data point |
+| `label` | `"y = 2x"` | Text shown for this line in the legend |
+
+- `plt.legend()` draws the legend, using the `label` of each line. Call it **after** the lines are drawn.
+- `plt.grid(True)` adds grid lines.
+
+</details>
+
+### Task 5 - Line Plots
+
+**Objective:** Practice drawing a line plot, plotting two lines on the same axes, customizing colour, style and markers, and adding a legend and grid lines.
 
 **Instructions:**
-- Add the following code in the file `task10.py` to read the CSV file:
-```Python
-url = "https://raw.githubusercontent.com/itiievskyi/IMDB-Top-250/master/imdb_top_250.csv"
-df = pd.read_csv(url)
-```
-- Explore the dataset using `df.head()` and `df.info()`. This will help you understand the structure of the data, including columns such as "Title", "Year", "Rating", and "Genre".
-- Perform essential data processing:
-   - Copy the Year column into a new series.
-     ```python
-     years = df["Year"].copy()
-     ```
-   - Sort the years in ascending order.
-   - Count the number of movies for each year (use value_counts() or a similar method).
-- Using Matplotlib, create two plots:
-   - Line plot: Show the trend of movie ratings over the years.
-   - Bar plot: Show the number of movies per genre (df['Genre'].value_counts()).
-- Add **titles**, **axis labels**, and **legends** to all plots.
-- Run your script with python ./task10.py and verify the output.
----
 
-  
-## Lab 7 Sign-Off
-- Submit a PDF on Blackboard, named using your Seneca username (e.g., **yoursenecausername.pdf**).
-- The PDF must include screenshots of the following scripts and their terminal output, clearly showing your GitHub username.
-    - task1.py
-    - task2.py
-    - task3.py
-    - task4.py
-    - task5.py
-    - task6.py
-    - task7.py
-    - task8.py
-    - task9.py
-    - task10.py
-- Ensure the code and output are clearly readable. Screenshots should be high-resolution (minimum 800x600) and not blurry.
-- Blurry or unreadable submissions will be returned for redo. Resubmissions will only be graded as Satisfactory with a grade of 0, provided the work is satisfactory.
+- Create the file `task5.py`, add the required comment header, and import `matplotlib.pyplot` as `plt`.
+- Write a function named `plot_single_line` that:
+  - Takes three parameters: two lists `x` and `y`, and a file name `filename`.
+  - Starts a new figure and plots `y` against `x` as a line.
+  - Sets the title to `Weekly Study Hours`, the x-axis label to `Week` and the y-axis label to `Hours`.
+  - Saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+- Write a function named `plot_two_lines` that:
+  - Takes four parameters: three lists `x`, `y1` and `y2`, and a file name `filename`.
+  - Starts a new figure and plots two lines on the same axes:
+    - `y1` against `x`: blue, solid line (`"-"`), circle markers (`"o"`), label `y = 2x`.
+    - `y2` against `x`: red, dashed line (`"--"`), square markers (`"s"`), label `y = x^2`.
+  - Sets the title to `Linear vs Quadratic Growth`, the x-axis label to `x` and the y-axis label to `y`.
+  - Adds a legend and grid lines.
+  - Saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+- Write a `main()` function that:
+  - Creates the lists `x = [1, 2, 3, 4, 5]`, `y = [2, 4, 6, 8, 10]` and `y2 = [1, 4, 9, 16, 25]`.
+  - Calls `plot_single_line()` with `x`, `y` and `"line_plot.png"`.
+  - Calls `plot_two_lines()` with `x`, `y`, `y2` and `"two_lines.png"`.
+- Add a call to the `main()` function.
+- Run your script with `python task5.py` and verify the output. Open both PNG files in VS Code.
+
+**Expected Output:**
+
+```text
+Saved line_plot.png
+Saved two_lines.png
+```
+
+**Expected Files:** `line_plot.png` (one rising straight line) and `two_lines.png` (a blue solid line and a red dashed curve, with a legend in the top-left corner and grid lines).
+
+> **Think about it:** Look at `two_lines.png`. At which value of `x` do the two lines cross, and what happens to the gap between them after that point? Which type of growth would you rather have for your savings, and which for the number of failed logins on a server?
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Scatter Plots, Bar Charts and Histograms</b></summary>
+
+<br>
+
+| Chart | Function | Use it to show |
+|---|---|---|
+| Scatter plot | `plt.scatter(x, y)` | The relationship between two numeric variables, one dot per pair |
+| Bar chart | `plt.bar(categories, values)` | One value per **category** (products, genres, countries) |
+| Histogram | `plt.hist(data, bins=5)` | How often the values of **one** numeric variable fall into ranges (bins) |
+
+**Customizing a scatter plot**
+
+```python
+plt.scatter(x, y, c="green", s=100, alpha=0.6)
+```
+
+- `c` is the colour, `s` is the size of each dot, and `alpha` is the transparency, from `0` (invisible) to `1` (solid). Transparency shows where dots overlap.
+
+**Colours for bars:** `plt.bar(categories, values, color="orange")`. Add `edgecolor="black"` to `plt.hist()` to outline each bar.
+
+**`plt.hist()` returns what it counted.** It returns three things: the number of values in each bin (a NumPy array of floats), the bin edges, and the drawn bars:
+
+```python
+counts, edges, bars = plt.hist([1, 2, 2, 3, 3, 3], bins=3)
+print(counts.astype(int).tolist())   # [1, 2, 3]
+print(edges.round(1).tolist())       # [1.0, 1.7, 2.3, 3.0]
+```
+
+With `bins=5`, Matplotlib splits the range from the smallest to the largest value into 5 equal parts, so there are 6 edges.
+
+</details>
+
+### Task 6 - Scatter Plots, Bar Charts and Histograms
+
+**Objective:** Practice creating a scatter plot, a bar chart and a histogram, customizing colour, size and transparency, and understanding when each chart type is appropriate.
+
+**Instructions:**
+
+- Create the file `task6.py`, add the required comment header, and import `matplotlib.pyplot` as `plt`.
+- Write a function named `plot_scatter` that:
+  - Takes three parameters: two lists `x` and `y`, and a file name `filename`.
+  - Starts a new figure and draws a scatter plot with green dots (`c="green"`), size `100` and transparency `0.6`.
+  - Sets the title to `Car Age vs Speed`, the x-axis label to `Car age (years)` and the y-axis label to `Speed (km/h)`.
+  - Saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+- Write a function named `plot_bar` that:
+  - Takes three parameters: a list `products`, a list `sales`, and a file name `filename`.
+  - Starts a new figure and draws an orange bar chart of `sales` per product.
+  - Sets the title to `Product Sales Comparison`, the x-axis label to `Product` and the y-axis label to `Sales (units)`.
+  - Saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+  - Finds the best-selling product **without a loop**, using `max()` and the list method `index()`, and prints `Best-selling product: <product>`.
+- Write a function named `plot_histogram` that:
+  - Takes three parameters: a list `daily_sales`, a number of bins `bins`, and a file name `filename`.
+  - Starts a new figure and draws a histogram of `daily_sales` with `bins` bins and black bar edges. Store the three values that `plt.hist()` returns.
+  - Sets the title to `Distribution of Daily Sales`, the x-axis label to `Daily sales (units)` and the y-axis label to `Number of days`.
+  - Saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+  - Prints the number of days in each bin as a list of integers, and the bin edges rounded to 1 decimal place as a list, with the labels shown in the expected output.
+- Write a `main()` function that:
+  - Calls `plot_scatter()` with `ages = [5, 7, 8, 7, 6, 9, 5, 6]`, `speeds = [99, 86, 87, 88, 100, 86, 103, 87]` and `"scatter_plot.png"`.
+  - Calls `plot_bar()` with `products = ["Coffee", "Tea", "Juice", "Soda"]`, `sales = [150, 120, 90, 60]` and `"bar_chart.png"`.
+  - Calls `plot_histogram()` with `daily_sales = [20, 15, 25, 18, 30, 12, 22, 28, 16, 14, 19, 21]`, `5` bins and `"histogram.png"`.
+- Add a call to the `main()` function.
+- At the **bottom** of `task6.py`, answer the following in a comment of 3-5 sentences: *Why is a bar chart the right choice for the product sales, and a histogram the right choice for the daily sales? Run your script once with `bins=3` and once with `bins=8` (then set it back to `5`): how does the number of bins change what the histogram shows?*
+- Run your script with `python task6.py` and verify the output. Open the three PNG files in VS Code.
+
+**Expected Output:**
+
+```text
+Saved scatter_plot.png
+Saved bar_chart.png
+Best-selling product: Coffee
+Saved histogram.png
+Days in each bin: [3, 3, 3, 1, 2]
+Bin edges: [12.0, 15.6, 19.2, 22.8, 26.4, 30.0]
+```
+
+**Expected Files:** `scatter_plot.png`, `bar_chart.png` and `histogram.png`.
+
+> **Note:** The histogram counts add up to `12`, the number of days in `daily_sales`. Check this with your own output: it is a quick way to confirm that every value landed in a bin.
+
+<details markdown="1">
+
+<summary><b>Quick Reference: Subplots</b></summary>
+
+<br>
+
+**Subplots** place several charts in one figure, side by side, so you can compare them.
+
+`plt.subplot(rows, columns, index)` selects the chart that the next plotting commands draw on. For two charts next to each other, use 1 row and 2 columns:
+
+| | Column 1 | Column 2 |
+|---|---|---|
+| **Row 1** | `plt.subplot(1, 2, 1)` (left) | `plt.subplot(1, 2, 2)` (right) |
+
+```python
+plt.figure(figsize=(10, 4))   # width and height in inches: room for 2 charts
+
+plt.subplot(1, 2, 1)          # left chart
+plt.bar(names, values)
+plt.title("Left chart")       # title and labels apply to the CURRENT chart
+
+plt.subplot(1, 2, 2)          # right chart
+plt.hist(data, bins=5)
+plt.title("Right chart")
+
+plt.suptitle("One title for the whole figure")
+plt.tight_layout()            # adjust spacing so titles and labels do not overlap
+plt.savefig("charts.png")
+plt.close()
+```
+
+**Plotting the result of `value_counts()`.** The result is a Series: the values (such as service names) are its `index`, and the counts are its `values`:
+
+```python
+counts = df["Service"].value_counts()
+plt.bar(counts.index, counts.values)
+```
+
+</details>
+
+### Task 7 - Firewall Charts with Subplots
+
+**Objective:** Bring Pandas and Matplotlib together: count the events in your sample with `value_counts()`, and show your data in one figure with two charts side by side.
+
+**Instructions:**
+
+- Create the file `task7.py`, add the required comment header, and import `matplotlib.pyplot` as `plt` and Pandas as `pd`.
+- Below the imports, copy the same **provided code** as in Task 4, with the **same** student ID.
+- Write a function named `build_charts` that takes three parameters: your sample `my_log`, the `student_id`, and a file name `filename`. It:
+  - Counts the events per service with `value_counts()` and stores the result in `service_counts`.
+  - Starts a new figure of size `(10, 4)`.
+  - **Left chart** (`plt.subplot(1, 2, 1)`): a blue bar chart of `service_counts`, with the title `Events per Service`, the x-axis label `Service` and the y-axis label `Number of events`.
+  - **Right chart** (`plt.subplot(1, 2, 2)`): a red histogram of the `Hour` column with `6` bins and black edges, with the title `Events by Hour`, the x-axis label `Hour of day` and the y-axis label `Number of events`.
+  - Adds the figure title `Firewall Events - Student <student ID>` with `plt.suptitle()`, for example `Firewall Events - Student 123456789`. (Hint: `"Firewall Events - Student " + str(student_id)`.)
+  - Calls `plt.tight_layout()`, saves the figure to `filename`, closes it, and prints `Saved <filename>`.
+  - Prints the most common service, using `service_counts.idxmax()`.
+- Write a `main()` function that loads the log and selects your events exactly as in Task 4, then calls `build_charts(my_log, STUDENT_ID, "security_charts.png")`.
+- Add a call to the `main()` function.
+- At the **bottom** of `task7.py`, answer the following in a comment of 2-4 sentences, using **your own** charts: *Which service appears most often in your sample? At what time of day are there the most events, and are there any events in the middle of the night?*
+- Run your script with the example ID and compare the output below. Then change `STUDENT_ID` to your own ID, run it again, and open `security_charts.png` in VS Code.
+
+**Expected Output (with the example ID `123456789`):**
+
+```text
+Loaded security_log.csv with 300 events
+Student ID: 123456789
+Events selected: 50
+
+Saved security_charts.png
+Most common service: HTTPS
+```
+
+**Expected File:** `security_charts.png`. With the example ID it looks like the picture described below. With your own ID the bars are different, and the figure title shows your ID.
+
+```text
+                 Firewall Events - Student 123456789
++-------------------------------+-------------------------------+
+| Events per Service            | Events by Hour                |
+| (blue bars: HTTPS, SSH, ...)  | (red histogram, 6 bins)       |
++-------------------------------+-------------------------------+
+```
+
+> **Think about it:** A company's employees work during the day. If you saw many `SSH` and `RDP` events at 2 a.m. from addresses outside the company, what might that mean?
+
+## Part B Submission
+
+Part B is graded **directly from your GitHub repository**. The structure below must match **exactly**, including upper and lower case. A file with the wrong name or in the wrong folder is treated as missing.
+
+```text
+SRT111F2026/                   <- your repository, with exactly this name
+└── Lab07/                     <- capital L, zero, seven
+    ├── task4.py               <- with YOUR student ID in STUDENT_ID
+    ├── task5.py
+    ├── task6.py
+    ├── task7.py               <- with the same student ID
+    ├── security_log.csv       <- the data file from Blackboard, unchanged
+    ├── line_plot.png          <- created by task5.py
+    ├── two_lines.png          <- created by task5.py
+    ├── scatter_plot.png       <- created by task6.py
+    ├── bar_chart.png          <- created by task6.py
+    ├── histogram.png          <- created by task6.py
+    └── security_charts.png    <- created by task7.py with your ID
+```
+
+- Do **not** rename the repository, and do not put the files in a sub-folder of `Lab07` or at the top level of the repository.
+- Run every script from inside the `Lab07` folder, so the PNG files are created there. Do not rename them.
+- Run `task7.py` again **after** you put in your own student ID, so the pushed `security_charts.png` shows your ID.
+- Part A files (`task1.py` to `task3.py`) are graded in class. You may also push them to `Lab07`; they will not affect your Part B grade.
+- Commit and push the `Lab07` folder to GitHub. Open your repository on github.com in a browser and confirm that all eleven files are inside `Lab07` and that the PNG images open.
+- On Blackboard, submit **only the link** to your repository, for example: `https://github.com/yourgithubusername/SRT111F2026`
+- No screenshots and no PDF are required.
+
+### Part B Grading Checklist
+
+Your repository will be checked against the following list. Your scripts are also run again by the grader, and the charts they save are checked automatically. For Tasks 4 and 7, the grader works out the expected results from **your** student ID. Use this list to check your own work before you submit.
+
+| # | Check |
+|---|---|
+| 1 | The repository is named `SRT111F2026` and contains a folder named `Lab07`. |
+| 2 | `Lab07` contains the four scripts, `security_log.csv` and the six PNG files, with the exact names shown above. |
+| 3 | Every `.py` file starts with the required comment header (Author, Date, Purpose). |
+| 4 | Every script defines the required functions with the required names, has a `main()` function, and calls `main()`. |
+| 5 | Each script runs from the `Lab07` folder without errors and prints the expected output (for Tasks 4 and 7, the expected output for your ID). |
+| 6 | `task4.py` and `task7.py` set `STUDENT_ID` to **your own** 9-digit student ID (the same in both), not the example ID. |
+| 7 | Task 4 uses `head()`, `shape`, a filter on `Action`, `value_counts()`, `groupby()` and `sort_values()`. |
+| 8 | Task 5 saves `line_plot.png` and `two_lines.png` with the required titles, axis labels, line colours, line styles, markers, legend and grid. |
+| 9 | Task 6 saves `scatter_plot.png`, `bar_chart.png` and `histogram.png` with the required titles, axis labels, colours, size, transparency and bins, prints the bin counts and edges, and has the reflection comment at the bottom. |
+| 10 | Task 7 saves `security_charts.png` with two subplots (a bar chart and a histogram) holding the required titles, labels, colours and figure title with your ID, and has a reflection comment at the bottom about your own charts. |
+| 11 | The repository link was submitted on Blackboard. |
